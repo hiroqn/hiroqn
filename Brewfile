@@ -1,0 +1,1 @@
+brew 'zsh-syntax-highlighting'
