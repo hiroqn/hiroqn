@@ -1,0 +1,2 @@
+brew 'ocaml'
+brew 'opam'
