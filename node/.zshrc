@@ -1,4 +1,4 @@
-export PATH=$PATH:./node_modules/.bin
+export PATH=$PATH:./node_modules/.bin:~/.config/yarn/global/node_modules/.bin
 export NVM_DIR="$HOME/.nvm"
 
 autoload -U add-zsh-hook

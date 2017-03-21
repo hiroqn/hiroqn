@@ -1,3 +1,2 @@
-tap 'homebrew/versions'
-brew 'homebrew/versions/gnupg21'
+brew 'gnupg@2.1'
 brew 'pinentry-mac'

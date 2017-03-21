@@ -2,6 +2,11 @@ echo "{i}"
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# 補完
+fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+autoload -U compinit
+compinit -u
+
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
