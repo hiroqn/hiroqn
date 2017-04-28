@@ -1,2 +1,3 @@
 brew 'gnupg@2.1'
 brew 'pinentry-mac'
+cask 'keybase'
