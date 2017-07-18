@@ -4,3 +4,8 @@
 	signkey = C3BF7281D87D87084E332DDC4F22B8FA3412D901
 [core]
 	excludesfile = /Users/hiroqn/.gh/.hiroqn/git/ignore
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
