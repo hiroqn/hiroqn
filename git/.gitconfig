@@ -3,7 +3,7 @@
 	email = hiroqn1008@gmail.com
 	signkey = C3BF7281D87D87084E332DDC4F22B8FA3412D901
 [core]
-	excludesfile = /Users/hiroqn/.gh/.hiroqn/git/ignore
+	excludesfile = /Users/hiroqn/.hiroqn/git/ignore
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
