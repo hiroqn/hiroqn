@@ -22,6 +22,12 @@ let
         version = "1.0.38";
         sha256 = "1nay6qs9vcxd85ra4bv93gg3aqg3r2wmcnqmcsy9n8pg1ds1vngd";
       }
+      {
+        name = "terraform";
+        publisher = "mauve";
+        version = "1.3.7";
+        sha256 = "07yn4x2ad5bcxzrxfji8vq9z416551v4ad41b4id389zg886am86";
+      }   
     ];
   };
   in
@@ -53,6 +59,7 @@ let
   environment.variables.PAGER = "cat";
   environment.variables.EDITOR = "${pkgs.vim}/bin/vi";
   environment.variables.LANG = "en_US.UTF-8";
+  environment.variables.XDG_CONFIG_HOME = "~/.config";
   environment.shellAliases.ls = "ls -GFS";
   environment.shellAliases.ll = "ls -lh";
   environment.shellAliases.lal = "ls -a -lA";
@@ -112,6 +119,7 @@ let
     # Unicode の正規化に関する問題を吸収
     setopt combining_chars
   '';
+  # pure maybe fuck
   programs.zsh.promptInit = "";
 
   programs.gnupg.agent.enable = true;
