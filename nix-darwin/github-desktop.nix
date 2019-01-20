@@ -1,10 +1,10 @@
 { stdenv, fetchzip, writeScript }:
 stdenv.mkDerivation rec {
-  version = "1.4.3-f0beb6ed";
+  version = "1.6.0-a2c1bb8f";
   name = "github-desktop-${version}";
   src = fetchzip {
     url = "https://desktop.githubusercontent.com/releases/${version}/GitHubDesktop.zip";
-    sha256 = "1cac0536nm3wrrqm1wsggi0cmdcmd1v9s759704l0av3d8aw792l";
+    sha256 = "0yr3bbyhhbs5h4qiv9nkcr16nhi5albjz3x423fqqnaxp174ji70";
   };
   dontPatchELF = true;
   dontStrip = true;
