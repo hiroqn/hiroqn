@@ -34,6 +34,12 @@ let
         version = "0.12.5";
         sha256 = "07mgckafw01bpznm1rb6amvy1j835d8m9zkvpnqmyssbka7zmgz7";
       }
+      {
+        name = "graphql-for-vscode";
+        publisher = "kumar-harsh";
+        version = "1.12.1";
+        sha256 = "0734a35326iqk4iqh92gxki60834frz8yxykqc90baqcq37sxzim";
+      }
     ];
   };
   # clamav setting
@@ -65,14 +71,14 @@ let
   in
 {
   nixpkgs.config.allowUnfree = true;
-
+  fonts.enableFontDir = true;
+  fonts.fonts = [ pkgs.monoid ];
   system.defaults.NSGlobalDomain.AppleShowAllExtensions = true;
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 25;
   system.defaults.NSGlobalDomain.KeyRepeat = 3;
   system.defaults.NSGlobalDomain.NSAutomaticCapitalizationEnabled = false;
-
   system.defaults.trackpad.Clicking = true;
-  
+
   environment.systemPackages =
     [ pkgs.vim
       pkgs.emacs
@@ -83,6 +89,7 @@ let
       pkgs.nodejs-10_x
       pkgs.kubectl
       pkgs.gnumake
+      pkgs.jq
       yarn
       vscode
       desktop
@@ -152,38 +159,22 @@ let
     export PURE_GIT_PULL=0
     source ${pure}/share/zsh/site-functions/async
     source ${pure}/share/zsh/site-functions/prompt_pure_setup
-    # 日本語ファイル名を表示可能にする
-    setopt print_eight_bit
-    # フローコントロールを無効にする
-    setopt no_flow_control
-    # '#' 以降をコメントとして扱う
-    setopt interactive_comments
-    # cd したら自動的にpushdする
-    setopt auto_pushd
-    # 重複したディレクトリを追加しない
-    setopt pushd_ignore_dups
-    # = の後はパス名として補完する
-    setopt magic_equal_subst
-    # 同じコマンドをヒストリに残さない
-    setopt hist_ignore_all_dups
-    # ヒストリファイルに保存するとき、すでに重複したコマンドがあったら古い方を削除する
-    setopt hist_save_nodups
-    # スペースから始まるコマンド行はヒストリに残さない
-    setopt hist_ignore_space
-    # ヒストリに保存するときに余分なスペースを削除する
-    setopt hist_reduce_blanks
-    #同時に起動したzshのヒストリー共有
-    setopt share_history
-    # ヒストリをインクリメンタルに追加する
-    setopt inc_append_history
-    # 補完候補が複数あるときに自動的に一覧表示する
-    setopt auto_menu
-    # 明確なドットの指定なしで.から始まるファイルをマッチ
-    setopt globdots
-    # 高機能なワイルドカード展開を使用する
-    setopt extended_glob
-    # Unicode の正規化に関する問題を吸収
-    setopt combining_chars
+    setopt print_eight_bit        # 日本語ファイル名を表示可能にする
+    setopt no_flow_control        # フローコントロールを無効にする
+    setopt interactive_comments   # '#' 以降をコメントとして扱う
+    setopt auto_pushd             # cd したら自動的にpushdする
+    setopt pushd_ignore_dups      # 重複したディレクトリを追加しない
+    setopt magic_equal_subst      # = の後はパス名として補完する
+    setopt hist_ignore_all_dups   # 同じコマンドをヒストリに残さない
+    setopt hist_save_nodups       # ヒストリファイルに保存するとき、すでに重複したコマンドがあったら古い方を削除する
+    setopt hist_ignore_space      # スペースから始まるコマンド行はヒストリに残さない
+    setopt hist_reduce_blanks     # ヒストリに保存するときに余分なスペースを削除する
+    setopt share_history          # 同時に起動したzshのヒストリー共有
+    setopt inc_append_history     # ヒストリをインクリメンタルに追加する
+    setopt auto_menu              # 補完候補が複数あるときに自動的に一覧表示する
+    setopt globdots               # 明確なドットの指定なしで.から始まるファイルをマッチ
+    setopt extended_glob          # 高機能なワイルドカード展開を使用する
+    setopt combining_chars        # Unicode の正規化に関する問題を吸収
   '';
   # pure maybe fuck
   programs.zsh.promptInit = "";
