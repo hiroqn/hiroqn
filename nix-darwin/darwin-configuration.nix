@@ -87,7 +87,6 @@ let
       pkgs.gnupg
       pkgs.alacritty
       pkgs.nodejs-10_x
-      pkgs.kubectl
       pkgs.gnumake
       pkgs.jq
       yarn
@@ -169,18 +168,52 @@ let
     setopt hist_save_nodups       # ヒストリファイルに保存するとき、すでに重複したコマンドがあったら古い方を削除する
     setopt hist_ignore_space      # スペースから始まるコマンド行はヒストリに残さない
     setopt hist_reduce_blanks     # ヒストリに保存するときに余分なスペースを削除する
+    setopt inc_append_history
     setopt share_history          # 同時に起動したzshのヒストリー共有
     setopt inc_append_history     # ヒストリをインクリメンタルに追加する
     setopt auto_menu              # 補完候補が複数あるときに自動的に一覧表示する
     setopt globdots               # 明確なドットの指定なしで.から始まるファイルをマッチ
     setopt extended_glob          # 高機能なワイルドカード展開を使用する
     setopt combining_chars        # Unicode の正規化に関する問題を吸収
+    hash -d dev=$HOME/.dev
+    autoload -Uz add-zsh-hook
+    chpwd_static_named_directory() {
+      local gitroot=$(git rev-parse --show-toplevel 2>/dev/null)
+      if [ ! "$gitroot" = "" ]; then
+        hash -d "git=$gitroot"
+        return
+      else
+        hash -d git=
+      fi
+    }
+    chpwd_static_named_directory
+
+    add-zsh-hook chpwd chpwd_static_named_directory
   '';
   # pure maybe fuck
   programs.zsh.promptInit = "";
 
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
+  programs.tmux.enable = true;
+  programs.tmux.enableSensible = true;
+  programs.tmux.enableMouse = true;
+  programs.tmux.enableFzf = true;
+  programs.tmux.enableVim = true;
+
+  programs.tmux.tmuxConfig = ''
+    #   bind 0 set status
+    #   bind S choose-session
+    #   bind-key -r "<" swap-window -t -1
+    #   bind-key -r ">" swap-window -t +1
+    #   bind-key -n M-r run "tmux send-keys -t .+ C-l Up Enter"
+    #   bind-key -n M-t run "tmux send-keys -t _ C-l Up Enter"
+    set -g pane-active-border-style fg=black
+    set -g pane-border-style fg=black
+    set -g status-bg black
+    set -g status-fg white
+    set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
+  '';
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 3;
