@@ -1,10 +1,10 @@
 { stdenv, fetchzip, writeScript }:
 stdenv.mkDerivation rec {
-  version = "2.2.1-6f192f11";
+  version = "2.2.3-3e4755f1";
   name = "github-desktop-${version}";
   src = fetchzip {
     url = "https://desktop.githubusercontent.com/releases/${version}/GitHubDesktop.zip";
-    sha256 = "sha256:0igdzadrda7f9pm9ff66djk3yzdmccymkl7mvn1bfgx9ggxlgi82";
+    sha256 = "sha256:05h96xjb3r8b3vxq5f4pzxyzsns8mjqzzqmchc19h9xa0fx7c4nq";
   };
   dontPatchELF = true;
   dontStrip = true;
@@ -21,7 +21,9 @@ stdenv.mkDerivation rec {
     mkdir -p  $out/bin
     mkdir -p "$out/Applications/${appName}"
     cp -R $src/Contents "$out/Applications/${appName}/"
-
+    ls -al "$out/Applications/${appName}/Contents/Resources/app/"
+    chmod -R 777 "$out/Applications/${appName}/Contents/Resources/app/"
+    sed -i -e 's/\.checkForUpdates()//' "$out/Applications/${appName}/Contents/Resources/app/renderer.js" 
     cat << EOS > $out/bin/github
     #!${stdenv.shell}
     CONTENTS="$out/Applications/${appName}/Contents"
