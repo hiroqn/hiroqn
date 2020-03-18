@@ -1,4 +1,4 @@
-{ stdenv, lib, runCommand, buildEnv, vscode, which, writeScript
+{ stdenv, lib, runCommand, buildEnv, vscode, makeWrapper
 , vscodeExtensions ? [] }:
 
 let
@@ -13,26 +13,24 @@ let
 
 in
 runCommand "${wrappedPkgName}-with-extensions-${wrappedPkgVersion}" {
-  buildInputs = [ vscode ];
+  buildInputs = [ vscode makeWrapper ];
   dontPatchELF = true;
   dontStrip = true;
   meta = vscode.meta;
 } ''
-  CONTENTS="$out/Applications/Code.app/Contents"
+  CONTENT="Applications/Visual Studio Code.app/Contents"
   mkdir -p $out/bin
-  mkdir -p "$out/Applications/Code.app"
-  cp -R "${vscode}/lib/vscode/Contents" $CONTENTS
-  chmod -R +w $CONTENTS/MacOS/
-  mv "$CONTENTS/MacOS/Electron" "$CONTENTS/MacOS/Electron.orig"
+  mkdir -p "$out/$CONTENT"
+  mkdir -p "$out/$CONTENT/MacOS"
 
-  ELECTRON="$CONTENTS/MacOS/Electron.orig"
-  CLI="$CONTENTS/Resources/app/out/cli.js"
+  for key in "Frameworks" "Info.plist" "PkgInfo" "Resources" "_CodeSignature"; do
+    ln -s "${vscode}/$CONTENT/$key" "$out/$CONTENT/$key"
+  done
 
-  cat << EOS > "$CONTENTS/MacOS/Electron"
-  #!${stdenv.shell}
-  ELECTRON_RUN_AS_NODE=1 "$ELECTRON" "$CLI" --extensions-dir "${combinedExtensionsDrv}/share/${wrappedPkgName}/extensions" "\$@"
-  exit \$?
-  EOS
-  chmod +x "$CONTENTS/MacOS/Electron"
-  ln -sT "$CONTENTS/MacOS/Electron" "$out/bin/code"
+  makeWrapper "${vscode}/$CONTENT/MacOS/Electron" "$out/$CONTENT/MacOS/Electron" \
+    --add-flags "\"$out/$CONTENT/Resources/app/out/cli.js\"" \
+    --add-flags "--extensions-dir ${combinedExtensionsDrv}/share/${wrappedPkgName}/extensions" \
+    --set ELECTRON_RUN_AS_NODE 1
+
+  ln -s "$out/$CONTENT/MacOS/Electron" "$out/bin/code"
 ''

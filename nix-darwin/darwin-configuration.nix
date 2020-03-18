@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 let
-  yarn = pkgs.yarn.override {
-    nodejs = pkgs.nodejs-10_x;
-  };
   desktop = pkgs.callPackage ./github-desktop.nix {};
   pure = pkgs.callPackage ./zsh-pure.nix {};
   vscode = pkgs.callPackage ./vscode.nix {
@@ -86,10 +83,8 @@ let
       pkgs.fzf
       pkgs.gnupg
       pkgs.alacritty
-      pkgs.nodejs-10_x
       pkgs.gnumake
       pkgs.jq
-      yarn
       vscode
       desktop
       clamav
