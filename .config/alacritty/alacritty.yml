@@ -15,9 +15,9 @@ font:
     style: Bold Italic
   size: 12.0
 visual_bell:
-  animation: EaseOutCubic
-  duration: 200
-  color: '0xeaea00'
+  animation: EaseOutExpo
+  duration: 2
+  color: '0xffffff'
 background_opacity: 0.8
 shell:
   program: /run/current-system/sw/bin/zsh
