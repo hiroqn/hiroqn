@@ -1,14 +1,14 @@
 { stdenv, fetchFromGitHub }:
 
 stdenv.mkDerivation rec {
-  version = "v1.8.0";
+  version = "v1.12.0";
   name = "pure-${version}";
 
   src = fetchFromGitHub {
     owner = "sindresorhus";
     repo = "pure";
     rev = version;
-    sha256 = "04w9xsga1vxfz56c4xwb1lx7yziz61yk6g4rn42j6y1drijfdr71";
+    sha256 = "1h04z7rxmca75sxdfjgmiyf1b5z2byfn6k4srls211l0wnva2r5y";
   };
 
   installPhase = ''

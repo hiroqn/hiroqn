@@ -5,7 +5,6 @@
 === darwin
 . Install https://nixos.org/nix/[Nix]
 . clone this repo, and (with nix-shell is better)
-.. `ln -s $CLONE_DIR/.hiroqn/.config ~/.config`
 .. `ln -s $CLONE_DIR/.hiroqn/nix-darwin ~/.nixpkgs`
-. https://github.com/LnL7/nix-darwin/[nix-darwin]
+. install https://github.com/LnL7/nix-darwin/[nix-darwin]
 . `darwin-rebuild switch`

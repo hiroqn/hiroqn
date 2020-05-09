@@ -41,12 +41,8 @@ let
           share = true;
         };
         autocd = true;
-        #historyIgnore = [ "ls" "cd" ];
         inherit shellAliases;
         initExtra = ''
-          export PURE_GIT_PULL=0
-          source ${pure}/share/zsh/site-functions/async
-          source ${pure}/share/zsh/site-functions/prompt_pure_setup
           setopt print_eight_bit        # 日本語ファイル名を表示可能にする
           setopt no_flow_control        # フローコントロールを無効にする
           setopt interactive_comments   # '#' 以降をコメントとして扱う
@@ -82,6 +78,8 @@ let
         userEmail = "hiroqn1008@gmail.com";
         userName = "hiroqn";
         signing.key = "C3BF7281D87D87084E332DDC4F22B8FA3412D901";
+        lfs.enable = true;
+        # delta.enable = true;
         iniContent.credential.helper = "osxkeychain";
         ignores = [ ".idea" ".DS_Store"  ".envrc" "*.iml" ];
       };
@@ -114,8 +112,10 @@ let
       pkgs.nix-prefetch-git
       pkgs.exa
       desktop
+      pure
     ];
   environment.shells = [ pkgs.zsh pkgs.bash ];
+  environment.variables.PURE_GIT_PULL = "0";
   environment.variables.PAGER = "cat";
   environment.variables.EDITOR = "${pkgs.vim}/bin/vi";
   environment.variables.LANG = "en_US.UTF-8";
@@ -145,8 +145,10 @@ let
   programs.zsh.enableFzfGit = true;
   programs.zsh.enableFzfCompletion = true;
   # pure maybe fuck
-  programs.zsh.promptInit = "";
+  programs.zsh.promptInit = "autoload -U promptinit && promptinit && prompt pure";
+  programs.zsh.interactiveShellInit = ''
 
+  '';
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
   programs.tmux.enable = true;
