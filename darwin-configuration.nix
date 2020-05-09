@@ -81,7 +81,7 @@ let
         userName = "hiroqn";
         signing.key = "C3BF7281D87D87084E332DDC4F22B8FA3412D901";
         lfs.enable = true;
-        # delta.enable = true;
+        delta.enable = true;
         iniContent.credential.helper = "osxkeychain";
         ignores = [ ".idea" ".DS_Store"  ".envrc" "*.iml" ];
       };
