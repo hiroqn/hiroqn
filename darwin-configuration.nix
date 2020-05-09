@@ -1,7 +1,9 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 let
-  desktop = pkgs.callPackage ./github-desktop.nix {};
-  pure = pkgs.callPackage ./zsh-pure.nix {};
+  source = import ./nix/sources.nix;
+  nixpkgs = import source.nixpkgs {};
+  desktop = nixpkgs.callPackage ./nix/github-desktop.nix {};
+  pure = nixpkgs.callPackage ./nix/zsh-pure.nix {};
   shellAliases = {
     ls = "ls -GFS";
     ll = "ls -lh";
@@ -17,10 +19,10 @@ let
   users.users.hiroqn.home = "/Users/hiroqn";
 
   # home-manager
-  imports = [ <home-manager/nix-darwin> ];
+  imports = [ "${source.home-manager}/nix-darwin" ];
   home-manager = {
     useUserPackages = true;
-    users.hiroqn = { pkgs, ... }: {
+    users.hiroqn = { ... }: {
       nixpkgs.config.allowUnfree = true;
       home.packages = [ ];
       xdg = {
@@ -89,7 +91,7 @@ let
           window.decorations = "transparent";
           background_opacity = 0.8;
           shell = {
-            program = "${pkgs.zsh}/bin/zsh";
+            program = "${nixpkgs.zsh}/bin/zsh";
             args = ["--login"];
           };
           font.size = 12.0;
@@ -99,25 +101,26 @@ let
   };
   # system config
   fonts.enableFontDir = true;
-  fonts.fonts = [ pkgs.monoid ];
+  fonts.fonts = [ nixpkgs.monoid ];
   environment.systemPackages =
-    [ pkgs.vim
-      pkgs.emacs
-      pkgs.git
-      pkgs.fzf
-      pkgs.gnupg
-      pkgs.alacritty
-      pkgs.gnumake
-      pkgs.jq
-      pkgs.nix-prefetch-git
-      pkgs.exa
+    [ nixpkgs.vim
+      nixpkgs.emacs
+      nixpkgs.git
+      nixpkgs.fzf
+      nixpkgs.gnupg
+      nixpkgs.alacritty
+      nixpkgs.gnumake
+      nixpkgs.jq
+      nixpkgs.nix-prefetch-git
+      nixpkgs.exa
+      nixpkgs.niv
       desktop
       pure
     ];
-  environment.shells = [ pkgs.zsh pkgs.bash ];
+  environment.shells = [ nixpkgs.zsh nixpkgs.bash ];
   environment.variables.PURE_GIT_PULL = "0";
   environment.variables.PAGER = "cat";
-  environment.variables.EDITOR = "${pkgs.vim}/bin/vi";
+  environment.variables.EDITOR = "${nixpkgs.vim}/bin/vi";
   environment.variables.LANG = "en_US.UTF-8";
 
   system.defaults.NSGlobalDomain.AppleShowAllExtensions = true;
@@ -174,5 +177,5 @@ let
   networking.hostName = "brahman";
   nix.maxJobs = 16;
   nix.buildCores = 16;
-  nix.package = pkgs.nix;
+  nix.package = nixpkgs.nix;
 }
