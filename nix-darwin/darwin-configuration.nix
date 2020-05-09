@@ -119,7 +119,6 @@ let
   environment.variables.PAGER = "cat";
   environment.variables.EDITOR = "${pkgs.vim}/bin/vi";
   environment.variables.LANG = "en_US.UTF-8";
-  environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
 
   system.defaults.NSGlobalDomain.AppleShowAllExtensions = true;
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 25;
