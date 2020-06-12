@@ -160,6 +160,9 @@ let
   programs.tmux.enableVim = true;
 
   programs.tmux.extraConfig = ''
+    unbind C-b
+    set -g prefix C-j
+    bind-key C-j send-prefix
     #   bind 0 set status
     #   bind S choose-session
     #   bind-key -r "<" swap-window -t -1
