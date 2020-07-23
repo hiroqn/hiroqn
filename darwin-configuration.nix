@@ -27,6 +27,7 @@ let
       home.packages = [ ];
       xdg = {
         enable = true;
+        configFile."nixpkgs/config.nix".source = ./config.nix;
       };
 
       programs.bash = {
