@@ -21,7 +21,6 @@ stdenv.mkDerivation rec {
     mkdir -p  $out/bin
     mkdir -p "$out/Applications/${appName}"
     cp -R $src/Contents "$out/Applications/${appName}/"
-    ls -al "$out/Applications/${appName}/Contents/Resources/app/"
     chmod -R 777 "$out/Applications/${appName}/Contents/Resources/app/"
     sed -i -e 's/\.checkForUpdates()//' "$out/Applications/${appName}/Contents/Resources/app/renderer.js"
     cat << EOS > $out/bin/github
