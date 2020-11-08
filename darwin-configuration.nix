@@ -4,6 +4,8 @@ let
   nixpkgs = import source.nixpkgs {};
   desktop = nixpkgs.callPackage ./nix/github-desktop.nix {};
   pure = nixpkgs.callPackage ./nix/zsh-pure.nix {};
+  fzf-tab = nixpkgs.callPackage ./nix/fzf-tab.nix {};
+  fast-syntax-highlighting = nixpkgs.callPackage ./nix/fast-syntax-highlighting.nix {};
   shellAliases = {
     ls = "ls -GFS";
     ll = "ls -lh";
@@ -74,6 +76,8 @@ let
           }
           chpwd_static_named_directory
           add-zsh-hook chpwd chpwd_static_named_directory
+          source ${fzf-tab}/fzf-tab.plugin.zsh
+          source ${fast-syntax-highlighting}/fast-syntax-highlighting.plugin.zsh
         '';
       };
       programs.git = {
@@ -115,6 +119,7 @@ let
       nixpkgs.nix-prefetch-git
       nixpkgs.exa
       nixpkgs.niv
+      nixpkgs.terminal-notifier
       desktop
       pure
     ];
@@ -143,7 +148,6 @@ let
   programs.bash.enable = true;
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = true;
-  programs.zsh.enableSyntaxHighlighting = true;
   programs.zsh.enableFzfHistory = true;
   programs.zsh.enableFzfGit = true;
   programs.zsh.enableFzfCompletion = true;
