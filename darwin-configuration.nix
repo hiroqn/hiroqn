@@ -108,7 +108,9 @@ let
   fonts.enableFontDir = true;
   fonts.fonts = [ nixpkgs.monoid ];
   environment.systemPackages =
-    [ nixpkgs.vim
+    [
+      (import source.niv {}).niv
+      nixpkgs.vim
       nixpkgs.emacs
       nixpkgs.git
       nixpkgs.fzf
@@ -118,7 +120,6 @@ let
       nixpkgs.jq
       nixpkgs.nix-prefetch-git
       nixpkgs.exa
-      nixpkgs.niv
       nixpkgs.terminal-notifier
       desktop
       pure
