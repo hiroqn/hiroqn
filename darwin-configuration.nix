@@ -80,6 +80,10 @@ let
           source ${fast-syntax-highlighting}/fast-syntax-highlighting.plugin.zsh
         '';
       };
+      programs.direnv = {
+        enable = true;
+        enableNixDirenvIntegration = true;
+      };
       programs.git = {
         enable = true;
         userEmail = "hiroqn1008@gmail.com";
@@ -88,7 +92,7 @@ let
         lfs.enable = true;
         delta.enable = true;
         iniContent.credential.helper = "osxkeychain";
-        ignores = [ ".idea" ".DS_Store"  ".envrc" "*.iml" ];
+        ignores = [ ".idea" ".DS_Store"  ".envrc" "*.iml" ".direnv"];
       };
       programs.alacritty = {
         enable = true;
