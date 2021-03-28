@@ -3,7 +3,6 @@ let
   source = import ./nix/sources.nix;
   nixpkgs = import source.nixpkgs {};
   desktop = nixpkgs.callPackage ./nix/github-desktop.nix {};
-  pure = nixpkgs.callPackage ./nix/zsh-pure.nix {};
   fzf-tab = nixpkgs.callPackage ./nix/fzf-tab.nix {};
   fast-syntax-highlighting = nixpkgs.callPackage ./nix/fast-syntax-highlighting.nix {};
   shellAliases = {
@@ -92,7 +91,7 @@ let
         lfs.enable = true;
         delta.enable = true;
         iniContent.credential.helper = "osxkeychain";
-        ignores = [ ".idea" ".DS_Store"  ".envrc" "*.iml" ".direnv"];
+        ignores = [ ".idea" ".DS_Store"  ".env" "*.iml" ".direnv"];
       };
       programs.alacritty = {
         enable = true;
@@ -114,6 +113,7 @@ let
   environment.systemPackages =
     [
       (import source.niv {}).niv
+      nixpkgs.openssh
       nixpkgs.vim
       nixpkgs.emacs
       nixpkgs.git
@@ -126,7 +126,7 @@ let
       nixpkgs.exa
       nixpkgs.terminal-notifier
       desktop
-      pure
+      nixpkgs.pure-prompt
     ];
   environment.shells = [ nixpkgs.zsh nixpkgs.bash ];
   environment.variables.PURE_GIT_PULL = "0";
