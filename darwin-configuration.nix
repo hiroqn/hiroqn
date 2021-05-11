@@ -127,6 +127,7 @@ let
       nixpkgs.terminal-notifier
       desktop
       nixpkgs.pure-prompt
+      (nixpkgs.callPackage ./nix/black-hole.nix {})
     ];
   environment.shells = [ nixpkgs.zsh nixpkgs.bash ];
   environment.variables.PURE_GIT_PULL = "0";
