@@ -22,9 +22,9 @@ let
   # home-manager
   imports = [ "${source.home-manager}/nix-darwin" ];
   home-manager = {
+    useGlobalPkgs = true;
     useUserPackages = true;
     users.hiroqn = { ... }: {
-      nixpkgs.config.allowUnfree = true;
       home.packages = [ ];
       xdg = {
         enable = true;
@@ -192,4 +192,11 @@ let
   nix.maxJobs = 16;
   nix.buildCores = 16;
   nix.package = nixpkgs.nix;
+  nixpkgs.overlays = [
+    (self: super: {
+      direnv = (import source.direnv { }).overrideAttrs (oldAttrs: rec {
+        doCheck = false;
+      });
+    })
+  ];
 }
