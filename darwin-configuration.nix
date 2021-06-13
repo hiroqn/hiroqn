@@ -160,7 +160,7 @@ let
   # pure maybe fuck
   programs.zsh.promptInit = "autoload -U promptinit && promptinit && prompt pure";
   programs.zsh.interactiveShellInit = ''
-
+    export FPATH
   '';
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
