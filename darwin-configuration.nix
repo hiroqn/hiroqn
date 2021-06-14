@@ -145,7 +145,7 @@ let
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
-  system.stateVersion = 3;
+  system.stateVersion = 4;
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
@@ -191,7 +191,10 @@ let
   networking.hostName = "brahman";
   nix.maxJobs = 16;
   nix.buildCores = 16;
-  nix.package = nixpkgs.nix;
+  nix.package = nixpkgs.nixFlakes;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
   nixpkgs.overlays = [
     (self: super: {
       direnv = (import source.direnv { }).overrideAttrs (oldAttrs: rec {
