@@ -3,6 +3,7 @@ let
   source = import ./nix/sources.nix;
   nixpkgs = import source.nixpkgs {};
   desktop = nixpkgs.callPackage ./nix/github-desktop.nix {};
+  blackhole = nixpkgs.callPackage ./nix/black-hole.nix {};
   in
 {
   # for some build
@@ -41,7 +42,6 @@ let
       nixpkgs.terminal-notifier
       desktop
       nixpkgs.pure-prompt
-      (nixpkgs.callPackage ./nix/black-hole.nix {})
     ];
   environment.shells = [ nixpkgs.zsh nixpkgs.bash ];
   environment.variables.PURE_GIT_PULL = "0";
@@ -103,6 +103,38 @@ let
   # You should generally set this to the total number of logical cores in your system.
   # $ sysctl -n hw.ncpu
   networking.hostName = "brahman";
+  system.build.plug-ins = nixpkgs.buildEnv {
+    name = "system-plug-ins";
+    paths = [blackhole]; #config.environment.systemPackages;
+    pathsToLink = "/Library/Audio/Plug-Ins";
+  };
+  system.activationScripts.postActivation.text = ''
+
+    find -L /Library/Audio/Plug-Ins -type d -name "*.driver" -print0 | while IFS= read -rd "" l; do
+      if [ -r "$l/.nixdrv" ]; then
+        if [ "${ config.system.build.plug-ins }" != "$(cat $l/.nixdrv)" ]; then
+          echo "deleting old driver $driver..." >&2
+          rm -rf $l
+        else
+          echo "same drv $driver..." >&2
+        fi
+      fi
+    done
+    find -L ${ config.system.build.plug-ins } -type d -name "*.driver" -print0 | while IFS= read -rd "" l; do
+      driver=''${l##${config.system.build.plug-ins}}
+
+      if [ ! -d "$driver" ]; then
+          echo "adding driver $driver..." >&2
+
+          cp -r $l $driver 2>/dev/null || {
+            echo "Could not copy $driver" >&2
+          }
+          echo "${ config.system.build.plug-ins }" > "$driver/.nixdrv"
+      else
+        echo "already exist $driver"
+      fi
+    done
+  '';
   nix.maxJobs = 16;
   nix.buildCores = 16;
   nix.package = nixpkgs.nixFlakes;

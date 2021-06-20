@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     xcodebuild build
   '';
   installPhase = ''
-    mkdir -p $out/bin/
-    mv BlackHole-*/Build/Products/*/BlackHole.driver $out/bin/
+    mkdir -p $out/Library/Audio/Plug-Ins/HAL
+    mv BlackHole-*/Build/Products/*/BlackHole.driver $out/Library/Audio/Plug-Ins/HAL/
   '';
 }
