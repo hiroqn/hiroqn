@@ -24,6 +24,7 @@ in
       save = 10000;
       ignoreDups = true;
       ignoreSpace = true;
+      extended = true;
       share = true;
     };
     autocd = true;
@@ -58,7 +59,7 @@ in
       chpwd_static_named_directory
       add-zsh-hook chpwd chpwd_static_named_directory
       source ${pkgs.callPackage ./nix/fzf-tab.nix {}}/fzf-tab.plugin.zsh
-      source ${pkgs.zsh-fast-syntax-highlighting}/fast-syntax-highlighting.plugin.zsh
+      source ${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh
     '';
   };
   programs.direnv = {
