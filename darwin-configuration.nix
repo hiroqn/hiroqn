@@ -9,6 +9,7 @@ let
   # for some build
   nixpkgs.config.allowUnfree = true;
 
+  users.nix.configureBuildUsers = true;
   users.users.hiroqn.name = "hiroqn";
   users.users.hiroqn.home = "/Users/hiroqn";
 
