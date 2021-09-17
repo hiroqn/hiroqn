@@ -33,7 +33,6 @@ let
       nixpkgs.vim
       nixpkgs.emacs
       nixpkgs.git
-      nixpkgs.fzf
       nixpkgs.gnupg
       nixpkgs.alacritty
       nixpkgs.gnumake
@@ -42,10 +41,8 @@ let
       nixpkgs.exa
       nixpkgs.terminal-notifier
       desktop
-      nixpkgs.pure-prompt
     ];
   environment.shells = [ nixpkgs.zsh nixpkgs.bash ];
-  environment.variables.PURE_GIT_PULL = "0";
   environment.variables.PAGER = "cat";
   environment.variables.EDITOR = "${nixpkgs.vim}/bin/vi";
   environment.variables.LANG = "en_US.UTF-8";
@@ -67,15 +64,13 @@ let
 
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;
+  programs.zsh.enableBashCompletion = false;
   programs.zsh.enable = true;
-  programs.zsh.enableCompletion = true;
-  programs.zsh.enableFzfHistory = true;
-  programs.zsh.enableFzfGit = true;
-  programs.zsh.enableFzfCompletion = true;
   # pure maybe fuck
-  programs.zsh.promptInit = "autoload -U promptinit && promptinit && prompt pure";
+  programs.zsh.enableCompletion = false;
+
   programs.zsh.interactiveShellInit = ''
-    export FPATH
+
   '';
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
@@ -138,9 +133,7 @@ let
   '';
   nix.maxJobs = 16;
   nix.buildCores = 16;
-  nix.package = nixpkgs.nixFlakes;
   nix.extraOptions = ''
-    experimental-features = nix-command flakes
   '';
   nixpkgs.overlays = [
     (self: super: {

@@ -17,6 +17,12 @@ in
     enable = true;
     inherit shellAliases;
   };
+  programs.fzf = {
+    enable = true;
+  };
+  programs.starship = {
+    enable = true;
+  };
   programs.zsh = {
     enable = true;
     history = {
@@ -28,8 +34,15 @@ in
       share = true;
     };
     autocd = true;
+    defaultKeymap = "emacs";
     inherit shellAliases;
+    enableCompletion = true;
+    enableSyntaxHighlighting = true;
+    initExtraFirst = ''
+      export FPATH
+    '';
     initExtra = ''
+      export NIX_PATH="$HOME/.nix-defexpr/channels''${NIX_PATH:+:}$NIX_PATH"
       setopt print_eight_bit        # 日本語ファイル名を表示可能にする
       setopt no_flow_control        # フローコントロールを無効にする
       setopt interactive_comments   # '#' 以降をコメントとして扱う
@@ -45,36 +58,44 @@ in
       setopt globdots               # 明確なドットの指定なしで.から始まるファイルをマッチ
       setopt extended_glob          # 高機能なワイルドカード展開を使用する
       setopt combining_chars        # Unicode の正規化に関する問題を吸収
-      hash -d dev=$HOME/.dev
       autoload -Uz add-zsh-hook
       chpwd_static_named_directory() {
         local gitroot=$(git rev-parse --show-toplevel 2>/dev/null)
-        if [ ! "$gitroot" = "" ]; then
+        if [ ! -n "$gitroot" ]; then
           hash -d "git=$gitroot"
           return
         else
           hash -d git=
         fi
       }
+      chpwd_compinit() {
+        if [ -n "$IN_NIX_SHELL" ]; then
+          compinit -u
+        fi
+      }
+      add-zsh-hook chpwd chpwd_compinit
+      compinit -u
       chpwd_static_named_directory
       add-zsh-hook chpwd chpwd_static_named_directory
       source ${pkgs.callPackage ./nix/fzf-tab.nix {}}/fzf-tab.plugin.zsh
-      source ${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh
     '';
+    dirHashes = {
+      dev = "$HOME/.dev";
+    };
   };
   programs.direnv = {
     enable = true;
-    enableNixDirenvIntegration = true;
+    nix-direnv.enable = true;
   };
   programs.git = {
     enable = true;
-    userEmail = "hiroqn1008@gmail.com";
+    userEmail = "public+github@hiroqn.net";
     userName = "hiroqn";
     signing.key = "C3BF7281D87D87084E332DDC4F22B8FA3412D901";
     lfs.enable = true;
     delta.enable = true;
     iniContent.credential.helper = "osxkeychain";
-    ignores = [ ".idea" ".DS_Store"  ".env" "*.iml" ".direnv"];
+    ignores = [ ".idea" ".DS_Store" "*.iml" ".direnv"];
   };
   programs.alacritty = {
     enable = true;

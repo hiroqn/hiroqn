@@ -1,10 +1,10 @@
 { stdenv, fetchzip, writeScript }:
 stdenv.mkDerivation rec {
-  version = "2.9.0-4806a6dc"; # https://formulae.brew.sh/api/cask/github.json
+  version = "2.9.3-2c86f4d1"; # https://formulae.brew.sh/api/cask/github.json
   name = "github-desktop-${version}";
   src = fetchzip {
-    url = "https://desktop.githubusercontent.com/releases/${version}/GitHubDesktop-x64.zip";
-    sha256 = "sha256-s9IFagjMmNk83qnlqo9UBugmSGNRJ6Apg4DIPHYMLfA=";
+    url = "https://desktop.githubusercontent.com/github-desktop/releases/${version}/GitHubDesktop-x64.zip";
+    sha256 = "sha256:0hxxzl0dyx81650k1dna4jdrkyzvyyma15v3qn7iasb4pqia5b7d";
   };
   dontPatchELF = true;
   dontStrip = true;
