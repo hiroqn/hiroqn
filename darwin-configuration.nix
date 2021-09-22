@@ -3,7 +3,7 @@ let
   source = import ./nix/sources.nix;
   nixpkgs = import source.nixpkgs {};
   desktop = nixpkgs.callPackage ./nix/github-desktop.nix {};
-  blackhole = nixpkgs.callPackage ./nix/black-hole.nix {};
+  blackhole = nixpkgs.callPackage source.nix-BlackHole {};
   in
 {
   # for some build
@@ -87,35 +87,36 @@ let
   # You should generally set this to the total number of logical cores in your system.
   # $ sysctl -n hw.ncpu
   networking.hostName = "brahman";
-  system.build.plug-ins = nixpkgs.buildEnv {
+  system.build.audio-plug-ins = nixpkgs.buildEnv {
     name = "system-plug-ins";
-    paths = [blackhole]; #config.environment.systemPackages;
-    pathsToLink = "/Library/Audio/Plug-Ins";
+    paths = [ blackhole ];
+    pathsToLink = "/Library/Audio/Plug-Ins/HAL";
   };
   system.activationScripts.postActivation.text = ''
-
-    find -L /Library/Audio/Plug-Ins -type d -name "*.driver" -print0 | while IFS= read -rd "" l; do
-      if [ -r "$l/.nixdrv" ]; then
-        if [ "${ config.system.build.plug-ins }" != "$(cat $l/.nixdrv)" ]; then
-          echo "deleting old driver $driver..." >&2
-          rm -rf $l
+    mkdir -p /Library/Audio/Plug-Ins/HAL
+    plugins="${ config.system.build.audio-plug-ins }"
+    find -L /Library/Audio/Plug-Ins/HAL -type d -name "*.driver" -print0 | while IFS= read -rd "" path; do
+      if [ -e "$path/.managed-by-nix" ]; then
+        # if driver manged by nix-darwin
+        if [ -e "$plugins$path" ]; then
+          if [ "$(readlink $plugins$path)" != "$(cat "$path/.managed-by-nix")" ];then
+            rm -rf "$path"
+            echo "driver will be replaced: $path"
+          fi
         else
-          echo "same drv $driver..." >&2
+          rm -rf "$path"
+          echo "driver will be unmanaged: $path"
         fi
       fi
     done
-    find -L ${ config.system.build.plug-ins } -type d -name "*.driver" -print0 | while IFS= read -rd "" l; do
-      driver=''${l##${config.system.build.plug-ins}}
-
-      if [ ! -d "$driver" ]; then
-          echo "adding driver $driver..." >&2
-
-          cp -r $l $driver 2>/dev/null || {
-            echo "Could not copy $driver" >&2
-          }
-          echo "${ config.system.build.plug-ins }" > "$driver/.nixdrv"
-      else
-        echo "already exist $driver"
+    find -L $plugins -type d -name "*.driver" -print0 | while IFS= read -rd "" path; do
+      driver=''${path##$plugins}
+      if [ ! -e "$driver" ];then
+        cp -r $path $driver 2>/dev/null || {
+          echo "Could not copy $path" >&2
+        }
+        echo "$(readlink $path)" > "$driver/.managed-by-nix"
+        echo "driver $path copied"
       fi
     done
   '';

@@ -23,6 +23,18 @@
         "url": "https://github.com/nix-community/home-manager/archive/039f786e609fdb3cfd9c5520ff3791750c3eaebf.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "nix-BlackHole": {
+        "branch": "master",
+        "description": "nix file for https://github.com/ExistentialAudio/BlackHole",
+        "homepage": null,
+        "owner": "hiroqn",
+        "repo": "nix-BlackHole",
+        "rev": "1cc297fcbffbc0291c3aa6af4e8866587a09b06d",
+        "sha256": "03nmzkpqifddnchjsfxwbpqpn5xnmw8h2yp96cpvs3hs5022qwix",
+        "type": "tarball",
+        "url": "https://github.com/hiroqn/nix-BlackHole/archive/1cc297fcbffbc0291c3aa6af4e8866587a09b06d.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "nix-darwin": {
         "branch": "master",
         "description": "nix modules for darwin",
