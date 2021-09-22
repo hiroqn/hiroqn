@@ -22,38 +22,29 @@ let
     useUserPackages = true;
     users.hiroqn = import ./home.nix;
   };
+  environment.darwinConfig = toString ./darwin-configuration.nix;
   # system config
-  fonts.enableFontDir = true;
-  fonts.fonts = [ nixpkgs.monoid ];
   environment.systemPackages =
     [
-      (import source.niv {}).niv
+      nixpkgs.alacritty
       nixpkgs.coreutils
-      nixpkgs.openssh
-      nixpkgs.vim
       nixpkgs.emacs
+      nixpkgs.exa
       nixpkgs.git
       nixpkgs.gnupg
-      nixpkgs.alacritty
       nixpkgs.gnumake
       nixpkgs.jq
+      nixpkgs.niv
       nixpkgs.nix-prefetch-git
-      nixpkgs.exa
+      nixpkgs.openssh
       nixpkgs.terminal-notifier
+      nixpkgs.vim
       desktop
     ];
   environment.shells = [ nixpkgs.zsh nixpkgs.bash ];
   environment.variables.PAGER = "cat";
   environment.variables.EDITOR = "${nixpkgs.vim}/bin/vi";
   environment.variables.LANG = "en_US.UTF-8";
-
-  system.defaults.NSGlobalDomain.AppleShowAllExtensions = true;
-  system.defaults.NSGlobalDomain.InitialKeyRepeat = 25;
-  system.defaults.NSGlobalDomain.KeyRepeat = 3;
-  system.defaults.NSGlobalDomain.NSAutomaticCapitalizationEnabled = false;
-  system.defaults.trackpad.Clicking = true;
-  system.defaults.dock.autohide = false;
-  system.defaults.dock.orientation = "left";
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -64,14 +55,11 @@ let
 
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;
-  programs.zsh.enableBashCompletion = false;
   programs.zsh.enable = true;
-  # pure maybe fuck
+  programs.zsh.enableBashCompletion = false;
   programs.zsh.enableCompletion = false;
+  programs.zsh.promptInit = "";
 
-  programs.zsh.interactiveShellInit = ''
-
-  '';
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
   programs.tmux.enable = true;
@@ -132,9 +120,17 @@ let
     done
   '';
   nix.maxJobs = 16;
+  nix.package = nixpkgs.nix;
+  nix.nixPath = [
+    {
+      darwin-config = "${config.environment.darwinConfig}";
+      darwin = source.nix-darwin;
+      nixpkgs = source.nixpkgs;
+    }
+    "/nix/var/nix/profiles/per-user/root/channels"
+    "$HOME/.nix-defexpr/channels"
+  ];
   nix.buildCores = 16;
-  nix.extraOptions = ''
-  '';
   nixpkgs.overlays = [
     (self: super: {
       direnv = (import source.direnv { }).overrideAttrs (oldAttrs: rec {
