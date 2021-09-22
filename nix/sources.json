@@ -23,16 +23,16 @@
         "url": "https://github.com/nix-community/home-manager/archive/039f786e609fdb3cfd9c5520ff3791750c3eaebf.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "niv": {
-        "branch": "v0.2.19",
-        "description": "Easy dependency management for Nix projects",
-        "homepage": "https://github.com/nmattia/niv",
-        "owner": "nmattia",
-        "repo": "niv",
-        "rev": "29ddaaf4e099c3ac0647f5b652469dfc79cd3b53",
-        "sha256": "1va6myp07gkspgxfch8z3rs9nyvys6jmgzkys6a2c4j09qxp1bs0",
+    "nix-darwin": {
+        "branch": "master",
+        "description": "nix modules for darwin",
+        "homepage": "",
+        "owner": "LnL7",
+        "repo": "nix-darwin",
+        "rev": "e1a3f7292f085fd588d11f94ed0f47968c16df0c",
+        "sha256": "0mifv59hqs35c91y3v3rkizy7nnzpsd1n8waz1lnbrbf4r9xmhq3",
         "type": "tarball",
-        "url": "https://github.com/nmattia/niv/archive/29ddaaf4e099c3ac0647f5b652469dfc79cd3b53.tar.gz",
+        "url": "https://github.com/LnL7/nix-darwin/archive/e1a3f7292f085fd588d11f94ed0f47968c16df0c.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {

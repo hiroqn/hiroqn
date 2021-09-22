@@ -13,6 +13,30 @@ in
     configFile."nixpkgs/config.nix".source = ./config.nix;
   };
 
+  targets.darwin.defaults = {
+    NSGlobalDomain = {
+      AppleShowAllExtensions = true;
+      InitialKeyRepeat = 25;
+      KeyRepeat = 3;
+      NSAutomaticCapitalizationEnabled = false;
+      "com.apple.trackpad.scaling" = "2.5";
+      "com.apple.trackpad.scrolling" = "0.4412";
+    };
+    "com.apple.Accessibility" = {
+      KeyRepeatEnabled = true;
+    };
+    "com.apple.AppleMultitouchTrackpad" = {
+      Clicking = true;
+      FirstClickThreshold = 0;
+      SecondClickThreshold = 0;
+    };
+    "com.apple.driver.AppleBluetoothMultitouch.trackpad" = {
+      Clicking = true;
+    };
+     "com.apple.dock" = {
+        show-recents = 0;
+     };
+  };
   programs.bash = {
     enable = true;
     inherit shellAliases;
@@ -42,7 +66,6 @@ in
       export FPATH
     '';
     initExtra = ''
-      export NIX_PATH="$HOME/.nix-defexpr/channels''${NIX_PATH:+:}$NIX_PATH"
       setopt print_eight_bit        # 日本語ファイル名を表示可能にする
       setopt no_flow_control        # フローコントロールを無効にする
       setopt interactive_comments   # '#' 以降をコメントとして扱う
