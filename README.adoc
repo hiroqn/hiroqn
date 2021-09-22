@@ -1,10 +1,14 @@
-= .hiroqn
+= hiroqn
 
-== Install
+(Welcome, Just Welcome)
 
-=== darwin
-. Install https://nixos.org/nix/[Nix]
-. clone this repo, and (with nix-shell is better)
-.. `ln -s $CLONE_DIR/.hiroqn ~/.nixpkgs`
-. install https://github.com/LnL7/nix-darwin/[nix-darwin]
-. `darwin-rebuild switch`
+== Install log
+
+=== darwin 2021/09/22
+. ` sh <(curl -L https://nixos.org/nix/install) --daemon --darwin-use-unencrypted-nix-store-volume`
+. clone this repo with `nix-shell -p git`
+. install https://github.com/LnL7/nix-darwin/[nix-darwin] with manual
+.. `mkdir -p ~/Applications`
+.. `darwin-rebuild switch`
+.. `rm /etc/zshrc` (https://github.com/LnL7/nix-darwin/issues/158)
+.. `darwin-rebuild switch`
