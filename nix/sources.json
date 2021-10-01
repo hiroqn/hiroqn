@@ -39,12 +39,12 @@
         "branch": "master",
         "description": "nix modules for darwin",
         "homepage": "",
-        "owner": "LnL7",
+        "owner": "hiroqn",
         "repo": "nix-darwin",
-        "rev": "e1a3f7292f085fd588d11f94ed0f47968c16df0c",
-        "sha256": "0mifv59hqs35c91y3v3rkizy7nnzpsd1n8waz1lnbrbf4r9xmhq3",
+        "rev": "8d08584a321855f3178054e8f6bb3c324b7fcdfd",
+        "sha256": "1vbz7jdnh0vy90n0mfm7dbxsk9zvm6d7z7d6h59yn04s3x4451mi",
         "type": "tarball",
-        "url": "https://github.com/LnL7/nix-darwin/archive/e1a3f7292f085fd588d11f94ed0f47968c16df0c.tar.gz",
+        "url": "https://github.com/hiroqn/nix-darwin/archive/8d08584a321855f3178054e8f6bb3c324b7fcdfd.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {

@@ -43,7 +43,7 @@ let
     ];
   environment.shells = [ nixpkgs.zsh nixpkgs.bash ];
   environment.variables.PAGER = "cat";
-  environment.variables.EDITOR = "${nixpkgs.vim}/bin/vi";
+  environment.variables.EDITOR = "${nixpkgs.vim}/bin/vim";
   environment.variables.LANG = "en_US.UTF-8";
 
   # Used for backwards compatibility, please read the changelog before changing.
@@ -84,9 +84,8 @@ let
     set -g status-fg white
     set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
   '';
-  # You should generally set this to the total number of logical cores in your system.
-  # $ sysctl -n hw.ncpu
-  networking.hostName = "brahman";
+  networking.hostName = "veda-20210910";
+  networking.computerName = "veda-20210910";
   system.build.audio-plug-ins = nixpkgs.buildEnv {
     name = "system-plug-ins";
     paths = [ blackhole ];

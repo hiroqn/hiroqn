@@ -16,6 +16,7 @@ in
   targets.darwin.defaults = {
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
+      ApplePressAndHoldEnabled = false;
       InitialKeyRepeat = 25;
       KeyRepeat = 3;
       NSAutomaticCapitalizationEnabled = false;
@@ -23,7 +24,7 @@ in
       "com.apple.trackpad.scrolling" = "0.4412";
     };
     "com.apple.Accessibility" = {
-      KeyRepeatEnabled = true;
+      KeyRepeatEnabled = 0;
     };
     "com.apple.AppleMultitouchTrackpad" = {
       Clicking = true;
@@ -33,9 +34,9 @@ in
     "com.apple.driver.AppleBluetoothMultitouch.trackpad" = {
       Clicking = true;
     };
-     "com.apple.dock" = {
-        show-recents = 0;
-     };
+    "com.apple.dock" = {
+      show-recents = 0;
+    };
   };
   programs.bash = {
     enable = true;
