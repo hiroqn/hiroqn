@@ -1,9 +1,6 @@
-{ config, ... }:
+{ pkgs, config, ... }:
 let
-  source = import ./nix/sources.nix;
-  nixpkgs = import source.nixpkgs {};
-  desktop = nixpkgs.callPackage ./nix/github-desktop.nix {};
-  blackhole = nixpkgs.callPackage source.nix-BlackHole {};
+  desktop = pkgs.callPackage ./nix/github-desktop.nix {};
   in
 {
   # for some build
@@ -14,9 +11,6 @@ let
   users.users.hiroqn.home = "/Users/hiroqn";
 
   # home-manager
-  imports = [
-    "${source.home-manager}/nix-darwin"
-  ];
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -26,24 +20,23 @@ let
   # system config
   environment.systemPackages =
     [
-      nixpkgs.alacritty
-      nixpkgs.coreutils
-      nixpkgs.emacs
-      nixpkgs.exa
-      nixpkgs.git
-      nixpkgs.gnupg
-      nixpkgs.gnumake
-      nixpkgs.jq
-      nixpkgs.niv
-      nixpkgs.nix-prefetch-git
-      nixpkgs.openssh
-      nixpkgs.terminal-notifier
-      nixpkgs.vim
+      pkgs.alacritty
+      pkgs.coreutils
+      pkgs.emacs
+      pkgs.exa
+      pkgs.git
+      pkgs.gnupg
+      pkgs.gnumake
+      pkgs.jq
+      pkgs.nix-prefetch-git
+      pkgs.openssh
+      pkgs.terminal-notifier
+      pkgs.vim
       desktop
     ];
-  environment.shells = [ nixpkgs.zsh nixpkgs.bash ];
+  environment.shells = [ pkgs.zsh pkgs.bash ];
   environment.variables.PAGER = "cat";
-  environment.variables.EDITOR = "${nixpkgs.vim}/bin/vim";
+  environment.variables.EDITOR = "${pkgs.vim}/bin/vim";
   environment.variables.LANG = "en_US.UTF-8";
 
   # Used for backwards compatibility, please read the changelog before changing.
@@ -52,7 +45,14 @@ let
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-
+#  services.nix-daemon.envVars = {
+#    NIX_GITHUB_PRIVATE_USERNAME = "hiroqn";
+#  };
+#  services.nix-daemon.securityEnvVars = {
+#    NIX_GITHUB_PRIVATE_PASSWORD = {
+#      account = "$NIX_GITHUB_PRIVATE_USERNAME";
+#    };
+#  };
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;
   programs.zsh.enable = true;
@@ -86,9 +86,9 @@ let
   '';
   networking.hostName = "veda-20210910";
   networking.computerName = "veda-20210910";
-  system.build.audio-plug-ins = nixpkgs.buildEnv {
+  system.build.audio-plug-ins = pkgs.buildEnv {
     name = "system-plug-ins";
-    paths = [ blackhole ];
+    paths = [ pkgs.blackhole ];
     pathsToLink = "/Library/Audio/Plug-Ins/HAL";
   };
   system.activationScripts.postActivation.text = ''
@@ -120,22 +120,12 @@ let
     done
   '';
   nix.maxJobs = 16;
-  nix.package = nixpkgs.nix;
-  nix.nixPath = [
-    {
-      darwin-config = "${config.environment.darwinConfig}";
-      darwin = source.nix-darwin;
-      nixpkgs = source.nixpkgs;
-    }
-    "/nix/var/nix/profiles/per-user/root/channels"
-    "$HOME/.nix-defexpr/channels"
-  ];
   nix.buildCores = 16;
-  nixpkgs.overlays = [
-    (self: super: {
-      direnv = (import source.direnv { }).overrideAttrs (oldAttrs: rec {
-        doCheck = false;
-      });
-    })
-  ];
+  nix.extraOptions = ''
+    netrc-file = /etc/nix/netrc
+    experimental-features = nix-command flakes
+  '';
+  nix.envVars = {
+    NIX_CURL_FLAGS = "--netrc-file /etc/nix/netrc";
+  };
 }
