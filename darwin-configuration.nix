@@ -45,14 +45,7 @@ let
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-#  services.nix-daemon.envVars = {
-#    NIX_GITHUB_PRIVATE_USERNAME = "hiroqn";
-#  };
-#  services.nix-daemon.securityEnvVars = {
-#    NIX_GITHUB_PRIVATE_PASSWORD = {
-#      account = "$NIX_GITHUB_PRIVATE_USERNAME";
-#    };
-#  };
+
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;
   programs.zsh.enable = true;
