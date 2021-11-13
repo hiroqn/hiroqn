@@ -7,7 +7,6 @@ let
   };
 in
 {
-  home.packages = [ ];
   xdg = {
     enable = true;
     configFile."nixpkgs/config.nix".source = ./config.nix;
@@ -85,7 +84,7 @@ in
       autoload -Uz add-zsh-hook
       chpwd_static_named_directory() {
         local gitroot=$(git rev-parse --show-toplevel 2>/dev/null)
-        if [ ! -n "$gitroot" ]; then
+        if [ -n "$gitroot" ]; then
           hash -d "git=$gitroot"
           return
         else
@@ -101,7 +100,7 @@ in
       compinit -u
       chpwd_static_named_directory
       add-zsh-hook chpwd chpwd_static_named_directory
-      source ${pkgs.callPackage ./nix/fzf-tab.nix {}}/fzf-tab.plugin.zsh
+      source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
     '';
     dirHashes = {
       dev = "$HOME/.dev";
@@ -110,6 +109,7 @@ in
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+    nix-direnv.enableFlakes = true;
   };
   programs.git = {
     enable = true;
