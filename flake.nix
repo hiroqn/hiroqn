@@ -2,7 +2,7 @@
   description = "hiroqn env";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/7053541084bf5ce2921ef307e5585d39d7ba8b3f";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     darwin.url = "github:hiroqn/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
@@ -18,7 +18,7 @@
   outputs = { self, darwin, nixpkgs, home-manager, nixpkgs-fmt, direnv, BlackHole }:
     let
       configuration = { pkgs, ... }: {
-        nix.package = pkgs.nix_2_4;
+        nix.package = pkgs.nix_2_5;
         nix.nixPath = [
           {
             inherit nixpkgs;
