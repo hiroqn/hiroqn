@@ -6,6 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
+        ref: ${{ github.head_ref }}
         token: ${{ secrets.GITHUB_TOKEN }}
     - uses: cachix/install-nix-action@v15
       with:
