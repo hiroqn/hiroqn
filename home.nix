@@ -112,7 +112,7 @@ in
   };
   programs.git = {
     enable = true;
-    userEmail = "public+github@hiroqn.net";
+    userEmail = "909385+hiroqn@users.noreply.github.com";
     userName = "hiroqn";
     signing.key = "C3BF7281D87D87084E332DDC4F22B8FA3412D901";
     lfs.enable = true;
