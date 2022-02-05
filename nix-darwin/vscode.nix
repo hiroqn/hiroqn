@@ -1,5 +1,11 @@
-{ stdenv, lib, runCommand, buildEnv, vscode, makeWrapper
-, vscodeExtensions ? [] }:
+{ stdenv
+, lib
+, runCommand
+, buildEnv
+, vscode
+, makeWrapper
+, vscodeExtensions ? [ ]
+}:
 
 let
 
@@ -12,7 +18,8 @@ let
   };
 
 in
-runCommand "${wrappedPkgName}-with-extensions-${wrappedPkgVersion}" {
+runCommand "${wrappedPkgName}-with-extensions-${wrappedPkgVersion}"
+{
   buildInputs = [ vscode makeWrapper ];
   dontPatchELF = true;
   dontStrip = true;

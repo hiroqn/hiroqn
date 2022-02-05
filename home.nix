@@ -1,4 +1,4 @@
-{ config, pkgs, ...  }:
+{ config, pkgs, ... }:
 let
   shellAliases = {
     ll = "ls -lh";
@@ -118,7 +118,7 @@ in
     lfs.enable = true;
     delta.enable = true;
     iniContent.credential.helper = "osxkeychain";
-    ignores = [ ".idea" ".DS_Store" "*.iml" ".direnv"];
+    ignores = [ ".idea" ".DS_Store" "*.iml" ".direnv" ];
   };
   programs.alacritty = {
     enable = true;
@@ -127,7 +127,7 @@ in
       background_opacity = 0.8;
       shell = {
         program = "${pkgs.zsh}/bin/zsh";
-        args = ["--login"];
+        args = [ "--login" ];
       };
       font.size = 12.0;
     };
