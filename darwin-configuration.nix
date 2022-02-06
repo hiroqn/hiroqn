@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 let
-  desktop = pkgs.callPackage ./nix/github-desktop.nix {};
-  in
+  desktop = pkgs.callPackage ./nix/github-desktop.nix { };
+in
 {
   # for some build
   nixpkgs.config.allowUnfree = true;

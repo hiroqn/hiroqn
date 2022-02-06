@@ -1,0 +1,28 @@
+name: nix check
+on: pull_request
+jobs:
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: cachix/install-nix-action@v15
+      with:
+        extra_nix_config: |
+          experimental-features = nix-command flakes
+          access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+    - name: nixpkgs-fmt
+      run: |
+        nix run '.#fmt' -- .
+    - name: Check for modified files
+      id: git-check
+      run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
+    - name: Push changes
+      if: steps.git-check.outputs.modified == 'true'
+      run: |
+        git config --global user.name 'hiroqn'
+        git config --global user.email '909385+hiroqn@users.noreply.github.com'
+        git commit -am "Automated changes"
+        git push origin HEAD:$GITHUB_HEAD_REF

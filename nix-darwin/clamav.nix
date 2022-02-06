@@ -1,5 +1,14 @@
-{ stdenv, fetchurl, pkgconfig
-, zlib, bzip2, libiconv, libxml2, openssl, ncurses, curl, pcre2
+{ stdenv
+, fetchurl
+, pkgconfig
+, zlib
+, bzip2
+, libiconv
+, libxml2
+, openssl
+, ncurses
+, curl
+, pcre2
 , libmspack
 }:
 
@@ -18,7 +27,15 @@ stdenv.mkDerivation rec {
   '';
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [
-    zlib bzip2 libxml2 openssl ncurses curl libiconv pcre2 libmspack
+    zlib
+    bzip2
+    libxml2
+    openssl
+    ncurses
+    curl
+    libiconv
+    pcre2
+    libmspack
   ];
 
   configureFlags = [

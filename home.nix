@@ -1,4 +1,4 @@
-{ config, pkgs, ...  }:
+{ config, pkgs, ... }:
 let
   shellAliases = {
     ll = "ls -lh";
@@ -112,13 +112,13 @@ in
   };
   programs.git = {
     enable = true;
-    userEmail = "public+github@hiroqn.net";
+    userEmail = "909385+hiroqn@users.noreply.github.com";
     userName = "hiroqn";
     signing.key = "C3BF7281D87D87084E332DDC4F22B8FA3412D901";
     lfs.enable = true;
     delta.enable = true;
     iniContent.credential.helper = "osxkeychain";
-    ignores = [ ".idea" ".DS_Store" "*.iml" ".direnv"];
+    ignores = [ ".idea" ".DS_Store" "*.iml" ".direnv" ];
   };
   programs.alacritty = {
     enable = true;
@@ -127,7 +127,7 @@ in
       background_opacity = 0.8;
       shell = {
         program = "${pkgs.zsh}/bin/zsh";
-        args = ["--login"];
+        args = [ "--login" ];
       };
       font.size = 12.0;
     };
