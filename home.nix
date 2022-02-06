@@ -10,8 +10,11 @@ in
   xdg = {
     enable = true;
     configFile."nixpkgs/config.nix".source = ./config.nix;
+    configFile."zellij/config.yaml" = {
+      source = ./zellij.yaml;
+    };
   };
-
+  home.packages = [ pkgs.zellij ];
   targets.darwin.defaults = {
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
