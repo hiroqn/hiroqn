@@ -24,7 +24,6 @@ in
       pkgs.coreutils
       pkgs.emacs
       pkgs.exa
-      pkgs.git
       pkgs.gnupg
       pkgs.gnumake
       pkgs.jq
@@ -55,28 +54,7 @@ in
 
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
-  programs.tmux.enable = true;
-  programs.tmux.enableSensible = true;
-  programs.tmux.enableMouse = true;
-  programs.tmux.enableFzf = true;
-  programs.tmux.enableVim = true;
 
-  programs.tmux.extraConfig = ''
-    unbind C-b
-    set -g prefix C-j
-    bind-key C-j send-prefix
-    #   bind 0 set status
-    #   bind S choose-session
-    #   bind-key -r "<" swap-window -t -1
-    #   bind-key -r ">" swap-window -t +1
-    #   bind-key -n M-r run "tmux send-keys -t .+ C-l Up Enter"
-    #   bind-key -n M-t run "tmux send-keys -t _ C-l Up Enter"
-    set -g pane-active-border-style fg=black
-    set -g pane-border-style fg=black
-    set -g status-bg black
-    set -g status-fg white
-    set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
-  '';
   networking.hostName = "veda-20210910";
   networking.computerName = "veda-20210910";
   system.build.audio-plug-ins = pkgs.buildEnv {
