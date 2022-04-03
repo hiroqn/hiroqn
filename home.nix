@@ -94,13 +94,20 @@ in
           hash -d git=
         fi
       }
-      chpwd_compinit() {
-        if [ -n "$IN_NIX_SHELL" ]; then
+      export COMPINIT_DIFF=""
+      _chpwd_compinit() {
+        if [ -n "$IN_NIX_SHELL" -a "$COMPINIT_DIFF" != "$DIRENV_DIFF" ]; then
           compinit -u
+          COMPINIT_DIFF="$DIRENV_DIFF"
+          echo "compinited !"
         fi
       }
-      add-zsh-hook chpwd chpwd_compinit
-      compinit -u
+      if [[ -z ''${precmd_functions[(r)_chpwd_compinit]} ]]; then
+        precmd_functions=( ''${precmd_functions[@]} _chpwd_compinit )
+      fi
+      if [[ -z ''${chpwd_functions[(r)_chpwd_compinit]} ]]; then
+        chpwd_functions=( ''${chpwd_functions[@]} _chpwd_compinit )
+      fi
       chpwd_static_named_directory
       add-zsh-hook chpwd chpwd_static_named_directory
       source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
