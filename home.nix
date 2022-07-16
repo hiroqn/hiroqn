@@ -15,6 +15,7 @@ in
     };
   };
   home.packages = [ pkgs.zellij ];
+  home.stateVersion = "22.05";
   targets.darwin.defaults = {
     NSGlobalDomain = {
       AppleShowAllExtensions = true;

@@ -8,6 +8,10 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    codex.url = "github:herp-inc/codex/add-hm-kubernetes";
+    codex.inputs.flake-utils.follows = "flake-utils";
+    codex.inputs.nixpkgs.follows = "nixpkgs";
+
     nixpkgs-fmt.url = "github:nix-community/nixpkgs-fmt";
     nixpkgs-fmt.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-fmt.inputs.flake-utils.follows = "flake-utils";
@@ -19,7 +23,7 @@
     BlackHole.flake = false;
   };
 
-  outputs = { self, flake-utils, darwin, nixpkgs, home-manager, nixpkgs-fmt, direnv, BlackHole }:
+  outputs = { self, flake-utils, darwin, nixpkgs, home-manager, codex, nixpkgs-fmt, direnv, BlackHole }:
     let
       configuration = { pkgs, ... }: {
         nix.package = pkgs.nix_2_5;
@@ -33,6 +37,10 @@
         environment.systemPackages = [
           nixpkgs-fmt.defaultPackage."x86_64-darwin"
         ];
+
+        home-manager.users.hiroqn.imports = [ codex.hmModule."x86_64-darwin" ];
+        home-manager.users.hiroqn.codex.enable = true;
+
         nixpkgs.overlays = [
           (final: prev: {
             direnv = (prev.direnv.override rec {
@@ -61,7 +69,6 @@
         devShell = pkgs.mkShell {
           buildInputs = [
             pkgs.nixpkgs-fmt
-            pkgs.hello
           ];
           shellHook = ''
             # ...
