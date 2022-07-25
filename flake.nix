@@ -4,10 +4,15 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.inputs.flake-compat.follows = "flake-compat";
     codex.url = "github:herp-inc/codex/add-hm-kubernetes";
     codex.inputs.flake-utils.follows = "flake-utils";
     codex.inputs.nixpkgs.follows = "nixpkgs";
@@ -23,7 +28,18 @@
     BlackHole.flake = false;
   };
 
-  outputs = { self, flake-utils, darwin, nixpkgs, home-manager, codex, nixpkgs-fmt, direnv, BlackHole }:
+  outputs =
+    { self
+    , flake-utils
+    , flake-compat
+    , darwin
+    , nixpkgs
+    , home-manager
+    , codex
+    , nixpkgs-fmt
+    , direnv
+    , BlackHole
+    }:
     let
       configuration = { pkgs, ... }: {
         nix.package = pkgs.nix_2_5;

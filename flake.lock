@@ -147,7 +147,9 @@
     },
     "home-manager": {
       "inputs": {
-        "flake-compat": "flake-compat_2",
+        "flake-compat": [
+          "flake-compat"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -263,6 +265,7 @@
         "codex": "codex",
         "darwin": "darwin",
         "direnv": "direnv",
+        "flake-compat": "flake-compat_2",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
