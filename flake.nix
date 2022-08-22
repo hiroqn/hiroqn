@@ -74,22 +74,25 @@
       };
     in
     {
-      darwinConfigurations."veda-20210910" = darwin.lib.darwinSystem {
+      nixpkgs = nixpkgs;
+      darwinConfigurations."GTPC20003" = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         modules = [ configuration home-manager.darwinModule ./darwin-configuration.nix ];
       };
     } // (flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system}; in
-      rec {
-        apps.fmt = flake-utils.lib.mkApp { drv = pkgs.nixpkgs-fmt; };
-        devShell = pkgs.mkShell {
-          buildInputs = [
-            pkgs.nixpkgs-fmt
-          ];
-          shellHook = ''
-            # ...
-          '';
-        };
-      }
+    let pkgs = nixpkgs.legacyPackages.${system}; in
+    rec {
+      inherit pkgs;
+      apps.fmt = flake-utils.lib.mkApp { drv = pkgs.nixpkgs-fmt; };
+      devShell = pkgs.mkShell {
+        buildInputs = [
+          pkgs.nixpkgs-fmt
+          (pkgs.callPackage ./otel-cli.nix { })
+        ];
+        shellHook = ''
+          # ...
+        '';
+      };
+    }
     ));
 }

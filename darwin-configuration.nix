@@ -55,8 +55,6 @@ in
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
 
-  networking.hostName = "veda-20210910";
-  networking.computerName = "veda-20210910";
   system.build.audio-plug-ins = pkgs.buildEnv {
     name = "system-plug-ins";
     paths = [ pkgs.blackhole ];
@@ -99,4 +97,10 @@ in
   nix.envVars = {
     NIX_CURL_FLAGS = "--netrc-file /etc/nix/netrc";
   };
+  nix.binaryCachePublicKeys = [
+    "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+  ];
+  nix.binaryCaches = [
+    "https://cache.iog.io"
+  ];
 }
