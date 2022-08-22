@@ -135,7 +135,9 @@ in
     enable = true;
     settings = {
       window.decorations = "transparent";
-      background_opacity = 0.8;
+      window.padding.x = 5;
+      window.padding.y = 5;
+      window.opacity = 0.8;
       shell = {
         program = "${pkgs.zsh}/bin/zsh";
         args = [ "--login" ];

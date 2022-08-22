@@ -12,7 +12,7 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.inputs.flake-compat.follows = "flake-compat";
+    home-manager.inputs.utils.follows = "flake-utils";
     codex.url = "github:herp-inc/codex/add-hm-kubernetes";
     codex.inputs.flake-utils.follows = "flake-utils";
     codex.inputs.nixpkgs.follows = "nixpkgs";
@@ -31,7 +31,6 @@
   outputs =
     { self
     , flake-utils
-    , flake-compat
     , darwin
     , nixpkgs
     , home-manager
@@ -39,6 +38,7 @@
     , nixpkgs-fmt
     , direnv
     , BlackHole
+    , ...
     }:
     let
       configuration = { pkgs, ... }: {
