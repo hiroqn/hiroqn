@@ -17,11 +17,6 @@
     codex.inputs.flake-utils.follows = "flake-utils";
     codex.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixpkgs-fmt.url = "github:nix-community/nixpkgs-fmt";
-    nixpkgs-fmt.inputs.nixpkgs.follows = "nixpkgs";
-    nixpkgs-fmt.inputs.flake-utils.follows = "flake-utils";
-    #    nixpkgs-fmt.inputs.fenix.inputs.nixpkgs.follows = "nixpkgs";
-
     direnv.url = "github:ruicc/direnv/support-aliases";
     direnv.flake = false;
     BlackHole.url = "github:hiroqn/nix-BlackHole";
@@ -35,7 +30,6 @@
     , nixpkgs
     , home-manager
     , codex
-    , nixpkgs-fmt
     , direnv
     , BlackHole
     , ...
@@ -50,10 +44,6 @@
           "/nix/var/nix/profiles/per-user/root/channels"
           "$HOME/.nix-defexpr/channels"
         ];
-        environment.systemPackages = [
-          nixpkgs-fmt.defaultPackage."x86_64-darwin"
-        ];
-
         home-manager.users.hiroqn.imports = [ codex.hmModule."x86_64-darwin" ];
         home-manager.users.hiroqn.codex.enable = true;
 
@@ -83,10 +73,8 @@
     let pkgs = nixpkgs.legacyPackages.${system}; in
     rec {
       inherit pkgs;
-      apps.fmt = flake-utils.lib.mkApp { drv = pkgs.nixpkgs-fmt; };
       devShell = pkgs.mkShell {
         buildInputs = [
-          pkgs.nixpkgs-fmt
           (pkgs.callPackage ./otel-cli.nix { })
         ];
         shellHook = ''

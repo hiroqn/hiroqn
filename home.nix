@@ -14,7 +14,10 @@ in
       source = ./zellij.yaml;
     };
   };
-  home.packages = [ pkgs.zellij ];
+  home.packages = [
+    pkgs.zellij
+    pkgs.nixpkgs-fmt
+  ];
   home.stateVersion = "22.05";
   targets.darwin.defaults = {
     NSGlobalDomain = {
