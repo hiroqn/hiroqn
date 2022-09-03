@@ -14,8 +14,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.inputs.utils.follows = "flake-utils";
     codex.url = "github:herp-inc/codex/add-hm-kubernetes";
-    codex.inputs.flake-utils.follows = "flake-utils";
-    codex.inputs.nixpkgs.follows = "nixpkgs";
 
     direnv.url = "github:ruicc/direnv/support-aliases";
     direnv.flake = false;
