@@ -54,40 +54,7 @@ in
 
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
-
-  system.build.audio-plug-ins = pkgs.buildEnv {
-    name = "system-plug-ins";
-    paths = [ pkgs.blackhole ];
-    pathsToLink = "/Library/Audio/Plug-Ins/HAL";
-  };
-  system.activationScripts.postActivation.text = ''
-    mkdir -p /Library/Audio/Plug-Ins/HAL
-    plugins="${ config.system.build.audio-plug-ins }"
-    find -L /Library/Audio/Plug-Ins/HAL -type d -name "*.driver" -print0 | while IFS= read -rd "" path; do
-      if [ -e "$path/.managed-by-nix" ]; then
-        # if driver manged by nix-darwin
-        if [ -e "$plugins$path" ]; then
-          if [ "$(readlink $plugins$path)" != "$(cat "$path/.managed-by-nix")" ];then
-            rm -rf "$path"
-            echo "driver will be replaced: $path"
-          fi
-        else
-          rm -rf "$path"
-          echo "driver will be unmanaged: $path"
-        fi
-      fi
-    done
-    find -L $plugins -type d -name "*.driver" -print0 | while IFS= read -rd "" path; do
-      driver=''${path##$plugins}
-      if [ ! -e "$driver" ];then
-        cp -r $path $driver 2>/dev/null || {
-          echo "Could not copy $path" >&2
-        }
-        echo "$(readlink $path)" > "$driver/.managed-by-nix"
-        echo "driver $path copied"
-      fi
-    done
-  '';
+  nix.package = pkgs.nix_2_6;
   nix.maxJobs = 16;
   nix.buildCores = 16;
   nix.extraOptions = ''

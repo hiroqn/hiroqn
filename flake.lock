@@ -1,13 +1,17 @@
 {
   "nodes": {
     "BlackHole": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1632474333,
-        "narHash": "sha256-K48WpjmuwQb3ZwDCTX+XjgtuuPJeAymCSGh3qUxB6fw=",
+        "lastModified": 1663525205,
+        "narHash": "sha256-WpD0emnsWxdxioZnQEEjQKsG97YaoT4LOYEtIob+WV4=",
         "owner": "hiroqn",
         "repo": "nix-BlackHole",
-        "rev": "f5af8a4afb81fe499a78b81ab96b31797a97f45d",
+        "rev": "7f4f7a4252ceca644c0bcdfac990fc6de16f68c9",
         "type": "github"
       },
       "original": {

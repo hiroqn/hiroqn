@@ -18,7 +18,7 @@
     direnv.url = "github:ruicc/direnv/support-aliases";
     direnv.flake = false;
     BlackHole.url = "github:hiroqn/nix-BlackHole";
-    BlackHole.flake = false;
+    BlackHole.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -33,39 +33,43 @@
     , ...
     }:
     let
-      configuration = { pkgs, ... }: {
-        nix.package = pkgs.nix_2_5;
-        nix.nixPath = [
-          {
-            inherit nixpkgs;
-          }
-          "/nix/var/nix/profiles/per-user/root/channels"
-          "$HOME/.nix-defexpr/channels"
-        ];
-        home-manager.users.hiroqn.imports = [ codex.hmModule."x86_64-darwin" ];
-        home-manager.users.hiroqn.codex.enable = true;
-
-        nixpkgs.overlays = [
-          (final: prev: {
-            direnv = (prev.direnv.override rec {
-              buildGoModule = args: prev.buildGoModule (args // {
-                src = direnv;
-                version = "2.28.0-ruicc";
-                vendorSha256 = "sha256-P8NLY1iGh86ntmYsTVlnNh5akdaM8nzcxDn6Nfmgr84=";
-              });
-            }).overrideAttrs (oldAttrs: rec {
-              doCheck = false;
-            });
-            blackhole = prev.callPackage BlackHole { };
-          })
-        ];
-      };
+      armv6l_pkgs = (import nixpkgs { system = "armv6l-linux"; });
     in
     {
       nixpkgs = nixpkgs;
       darwinConfigurations."GTPC20003" = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
-        modules = [ configuration home-manager.darwinModule ./darwin-configuration.nix ];
+        modules = [
+          ({ pkgs, ... }:
+            {
+              nix.nixPath = [
+                {
+                  inherit nixpkgs;
+                }
+                "/nix/var/nix/profiles/per-user/root/channels"
+                "$HOME/.nix-defexpr/channels"
+              ];
+              home-manager.users.hiroqn.imports = [ codex.hmModule."x86_64-darwin" ];
+              home-manager.users.hiroqn.codex.enable = true;
+              BlackHole.enable = true;
+              nixpkgs.overlays = [
+                (final: prev: {
+                  direnv = (prev.direnv.override rec {
+                    buildGoModule = args: prev.buildGoModule (args // {
+                      src = direnv;
+                      version = "2.28.0-ruicc";
+                      vendorSha256 = "sha256-P8NLY1iGh86ntmYsTVlnNh5akdaM8nzcxDn6Nfmgr84=";
+                    });
+                  }).overrideAttrs (oldAttrs: rec {
+                    doCheck = false;
+                  });
+                })
+              ];
+            })
+          ./darwin-configuration.nix
+          BlackHole.darwinModules.default
+          home-manager.darwinModule
+        ];
       };
     } // (flake-utils.lib.eachDefaultSystem (system:
     let pkgs = nixpkgs.legacyPackages.${system}; in
