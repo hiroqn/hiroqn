@@ -54,7 +54,7 @@ in
 
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
-  nix.package = pkgs.nix_2_6;
+  nix.package = pkgs.nixStable;
   nix.maxJobs = 16;
   nix.buildCores = 16;
   nix.extraOptions = ''
