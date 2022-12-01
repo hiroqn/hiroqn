@@ -13,7 +13,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.inputs.utils.follows = "flake-utils";
-    codex.url = "github:herp-inc/codex/refactor-codex-cmd";
+    codex.url = "github:herp-inc/codex";
 
     BlackHole.url = "github:hiroqn/nix-BlackHole";
     BlackHole.inputs.nixpkgs.follows = "nixpkgs";
