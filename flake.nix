@@ -8,7 +8,7 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
-    darwin.url = "github:LnL7/nix-darwin/master";
+    darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -55,13 +55,34 @@
           home-manager.darwinModule
         ];
       };
+
+      packages."armv6l-linux" = (import nixpkgs {
+        system = "armv6l-linux";
+        overlays = [
+          (final: prev: {
+            isdirectory = prev.lib.lowPrio (prev.callPackage ./isdirectory.nix {
+              stdenv = final.pcre.stdenv;
+            });
+          })
+        ];
+      });
+
+      nixosConfigurations = {
+        pi0 = nixpkgs.lib.nixosSystem {
+          system = "armv6l-linux";
+          #          specialArgs = attrs;
+          modules = [
+            ./hosts/rpi0/default.nix
+          ];
+        };
+      };
     } // (flake-utils.lib.eachDefaultSystem (system:
     let pkgs = nixpkgs.legacyPackages.${system}; in
     rec {
       inherit pkgs;
       devShell = pkgs.mkShell {
         buildInputs = [
-          (pkgs.callPackage ./otel-cli.nix { })
+          pkgs.otel-cli
         ];
         shellHook = ''
           # ...

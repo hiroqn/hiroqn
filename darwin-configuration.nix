@@ -1,12 +1,8 @@
 { pkgs, config, ... }:
-let
-  desktop = pkgs.callPackage ./nix/github-desktop.nix { };
-in
 {
   # for some build
   nixpkgs.config.allowUnfree = true;
 
-  users.nix.configureBuildUsers = true;
   users.users.hiroqn.name = "hiroqn";
   users.users.hiroqn.home = "/Users/hiroqn";
 
@@ -31,8 +27,8 @@ in
       pkgs.openssh
       pkgs.terminal-notifier
       pkgs.vim
-      desktop
     ];
+  environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
   environment.shells = [ pkgs.zsh pkgs.bash ];
   environment.variables.PAGER = "cat";
   environment.variables.EDITOR = "${pkgs.vim}/bin/vim";
@@ -54,9 +50,10 @@ in
 
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
+  nix.configureBuildUsers = true;
   nix.package = pkgs.nixStable;
-  nix.maxJobs = 16;
-  nix.buildCores = 16;
+  nix.settings.max-jobs = 16;
+  nix.settings.cores = 16;
   nix.extraOptions = ''
     netrc-file = /etc/nix/netrc
     experimental-features = nix-command flakes
@@ -64,10 +61,10 @@ in
   nix.envVars = {
     NIX_CURL_FLAGS = "--netrc-file /etc/nix/netrc";
   };
-  nix.binaryCachePublicKeys = [
+  nix.settings.trusted-public-keys = [
     "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
   ];
-  nix.binaryCaches = [
+  nix.settings.substituters = [
     "https://cache.iog.io"
   ];
 }
