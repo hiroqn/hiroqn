@@ -6,13 +6,6 @@
   users.users.hiroqn.name = "hiroqn";
   users.users.hiroqn.home = "/Users/hiroqn";
 
-  # home-manager
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.hiroqn = import ./home.nix;
-  };
-  environment.darwinConfig = toString ./darwin-configuration.nix;
   # system config
   environment.systemPackages =
     [

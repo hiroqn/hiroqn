@@ -42,26 +42,24 @@
                 "/nix/var/nix/profiles/per-user/root/channels"
                 "$HOME/.nix-defexpr/channels"
               ];
-              home-manager.users.hiroqn.imports = [ codex.hmModule."x86_64-darwin" ];
-              home-manager.users.hiroqn.codex.enable = true;
+              # home-manager
+              home-manager = {
+                users.hiroqn.imports = [
+                  codex.hmModule."x86_64-darwin"
+                  ./home.nix
+                  ./hosts/GTPC20003/home.nix
+                ];
+                users.hiroqn.codex.enable = true;
+                useGlobalPkgs = true;
+                useUserPackages = true;
+              };
               BlackHole.enable = true;
             })
-          ./darwin-configuration.nix
+          ./hosts/GTPC20003/default.nix
           BlackHole.darwinModules.default
           home-manager.darwinModule
         ];
       };
-
-      packages."armv6l-linux" = (import nixpkgs {
-        system = "armv6l-linux";
-        overlays = [
-          (final: prev: {
-            isdirectory = prev.lib.lowPrio (prev.callPackage ./isdirectory.nix {
-              stdenv = final.pcre.stdenv;
-            });
-          })
-        ];
-      });
 
       nixosConfigurations = {
         pi0 = nixpkgs.lib.nixosSystem {
@@ -79,6 +77,7 @@
       devShell = pkgs.mkShell {
         buildInputs = [
           pkgs.otel-cli
+          pkgs.nixpkgs-fmt
         ];
         shellHook = ''
           # ...
