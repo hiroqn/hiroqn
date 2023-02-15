@@ -25,9 +25,6 @@
     , BlackHole
     , ...
     }:
-    let
-      armv6l_pkgs = (import nixpkgs { system = "armv6l-linux"; });
-    in
     {
       nixpkgs = nixpkgs;
       darwinConfigurations."GTPC20003" = darwin.lib.darwinSystem {
@@ -62,11 +59,29 @@
       };
 
       nixosConfigurations = {
-        pi0 = nixpkgs.lib.nixosSystem {
-          system = "armv6l-linux";
-          #          specialArgs = attrs;
+        # UTM with Virtualization framework
+        utm-vf-intel = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
           modules = [
-            ./hosts/rpi0/default.nix
+            ({ pkgs, ... }:
+              {
+                nix.nixPath = [
+                  "nixpkgs=${nixpkgs}"
+                  "/nix/var/nix/profiles/per-user/root/channels"
+                  "$HOME/.nix-defexpr/channels"
+                ];
+
+                # home-manager
+                home-manager = {
+                  users.hiroqn.imports = [
+                    ./home.nix
+                  ];
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                };
+              })
+            ./hosts/utm-vf-intel/default.nix
+            home-manager.nixosModule
           ];
         };
       };

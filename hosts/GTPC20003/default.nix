@@ -6,21 +6,6 @@
   users.users.hiroqn.name = "hiroqn";
   users.users.hiroqn.home = "/Users/hiroqn";
 
-  # system config
-  environment.systemPackages =
-    [
-      pkgs.alacritty
-      pkgs.coreutils
-      pkgs.emacs
-      pkgs.exa
-      pkgs.gnupg
-      pkgs.gnumake
-      pkgs.jq
-      pkgs.nix-prefetch-git
-      pkgs.openssh
-      pkgs.terminal-notifier
-      pkgs.vim
-    ];
   environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
   environment.shells = [ pkgs.zsh pkgs.bash ];
   environment.variables.PAGER = "cat";
