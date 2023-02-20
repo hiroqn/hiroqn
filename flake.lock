@@ -161,19 +161,16 @@
         "flake-compat": "flake-compat_2",
         "flake-utils": "flake-utils_2",
         "haskellNix": "haskellNix",
-        "nixpkgs": [
-          "codex",
-          "haskellNix",
-          "nixpkgs-unstable"
-        ],
+        "nix": "nix_2",
+        "nixpkgs": "nixpkgs_3",
         "telepresence-pkgs": "telepresence-pkgs"
       },
       "locked": {
-        "lastModified": 1670397119,
-        "narHash": "sha256-bz0F451eJZkbGKAej8thJspkiNYHLcELtV36NxMh9UM=",
+        "lastModified": 1675926893,
+        "narHash": "sha256-NEJ5S9NHKButUxnocwnr7vSdCEigOe+DHtwltGfvA+8=",
         "owner": "herp-inc",
         "repo": "codex",
-        "rev": "8cddf5e173a6f0b2cd6faa730202a54dae378c67",
+        "rev": "c97e57fe0c9637b00f903722669f2384bdafeef3",
         "type": "github"
       },
       "original": {
@@ -459,6 +456,22 @@
         "type": "github"
       }
     },
+    "nix_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1673254186,
+        "narHash": "sha256-hpPoGd5KF5rUiuCc3bPkkh4dAMk1FNl3J7VHcIXhefc=",
+        "owner": "NixOS",
+        "repo": "nix",
+        "rev": "89ef26664d3339a89afa8dfa762326cf196d1622",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nix",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1654275867,
@@ -587,6 +600,21 @@
     },
     "nixpkgs_3": {
       "locked": {
+        "lastModified": 1675844841,
+        "narHash": "sha256-k+o0bbdjDP4rr8H+ouvghjaXUV7dWsK73x5iDm/FaEo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "34b11b8d108a398a75033585ceb8f6fdfa1ef45b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1676209454,
         "narHash": "sha256-alj9mBkV9U6tTPDK026671D2pesLSYZZc9j5dBZJ9f0=",
         "owner": "nixos",
@@ -625,7 +653,7 @@
         "darwin": "darwin",
         "flake-utils": "flake-utils_3",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       }
     },
     "rust-overlay": {
