@@ -75,6 +75,7 @@
                 home-manager = {
                   users.hiroqn.imports = [
                     ./home.nix
+                    ./hosts/utm-vf-intel/home.nix
                   ];
                   useGlobalPkgs = true;
                   useUserPackages = true;
