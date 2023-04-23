@@ -63,7 +63,7 @@
   };
 
   services.spice-vdagentd.enable = true;
-
+  virtualisation.containerd.enable = true;
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -92,6 +92,9 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
+  nix.settings.trusted-users = [ "root" "hiroqn" ];
+  nix.settings.max-jobs = "auto";
+  nix.settings.cores = 0;
   nix.extraOptions = ''
     netrc-file = /etc/nix/netrc
     experimental-features = nix-command flakes

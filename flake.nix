@@ -90,7 +90,7 @@
     let pkgs = nixpkgs.legacyPackages.${system}; in
     rec {
       inherit pkgs;
-      devShell = pkgs.mkShell {
+      devShells.default = pkgs.mkShell {
         buildInputs = [
           pkgs.otel-cli
           pkgs.nixpkgs-fmt
