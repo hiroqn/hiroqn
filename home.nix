@@ -23,6 +23,12 @@ in
     pkgs.zellij
   ];
   home.stateVersion = "22.05";
+  programs.atuin = {
+    enable = true;
+    settings = {
+      update_check = false;
+    };
+  };
   programs.bash = {
     enable = true;
     inherit shellAliases;
@@ -47,25 +53,22 @@ in
     defaultKeymap = "emacs";
     inherit shellAliases;
     enableCompletion = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     initExtraFirst = ''
       export FPATH
     '';
     initExtra = ''
       setopt print_eight_bit        # 日本語ファイル名を表示可能にする
       setopt no_flow_control        # フローコントロールを無効にする
-      setopt interactive_comments   # '#' 以降をコメントとして扱う
       setopt auto_pushd             # cd したら自動的にpushdする
       setopt pushd_ignore_dups      # 重複したディレクトリを追加しない
       setopt magic_equal_subst      # = の後はパス名として補完する
       setopt hist_ignore_all_dups   # 同じコマンドをヒストリに残さない
       setopt hist_save_nodups       # ヒストリファイルに保存するとき、すでに重複したコマンドがあったら古い方を削除する
       setopt hist_reduce_blanks     # ヒストリに保存するときに余分なスペースを削除する
-      setopt inc_append_history
       setopt inc_append_history     # ヒストリをインクリメンタルに追加する
       setopt auto_menu              # 補完候補が複数あるときに自動的に一覧表示する
       setopt globdots               # 明確なドットの指定なしで.から始まるファイルをマッチ
-      setopt extended_glob          # 高機能なワイルドカード展開を使用する
       setopt combining_chars        # Unicode の正規化に関する問題を吸収
       autoload -Uz add-zsh-hook
       chpwd_static_named_directory() {
@@ -118,10 +121,6 @@ in
       window.padding.x = 5;
       window.padding.y = 5;
       window.opacity = 0.8;
-      shell = {
-        program = "${pkgs.zsh}/bin/zsh";
-        args = [ "--login" ];
-      };
       font.size = 12.0;
     };
   };
