@@ -8,7 +8,6 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.inputs.utils.follows = "flake-utils";
     codex.url = "github:herp-inc/codex";
 
     BlackHole.url = "github:hiroqn/nix-BlackHole";
@@ -89,11 +88,10 @@
     } // (flake-utils.lib.eachDefaultSystem (system:
     let pkgs = nixpkgs.legacyPackages.${system}; in
     rec {
-      inherit pkgs;
+      formatter = pkgs.nixpkgs-fmt;
       devShells.default = pkgs.mkShell {
         buildInputs = [
           pkgs.otel-cli
-          pkgs.nixpkgs-fmt
         ];
         shellHook = ''
           # ...
