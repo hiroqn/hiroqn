@@ -78,6 +78,9 @@
       xclip
       firefox
     ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH6la8XK3DUE9kGtj8LqEEkTtLvAlgXVv/z9BPkj85U4 hiroqn"
+    ];
   };
 
   nixpkgs.config.allowUnfree = true;
