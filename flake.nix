@@ -12,6 +12,8 @@
 
     BlackHole.url = "github:hiroqn/nix-BlackHole";
     BlackHole.inputs.nixpkgs.follows = "nixpkgs";
+
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
   outputs =
@@ -22,6 +24,7 @@
     , home-manager
     , codex
     , BlackHole
+    , vscode-server
     , ...
     }:
     {
@@ -79,9 +82,11 @@
                   useGlobalPkgs = true;
                   useUserPackages = true;
                 };
+               services.vscode-server.enable = true;
               })
             ./hosts/utm-vf-intel/default.nix
             home-manager.nixosModule
+            vscode-server.nixosModules.default
           ];
         };
       };
