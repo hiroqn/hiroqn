@@ -82,7 +82,7 @@
                   useGlobalPkgs = true;
                   useUserPackages = true;
                 };
-               services.vscode-server.enable = true;
+                services.vscode-server.enable = true;
               })
             ./hosts/utm-vf-intel/default.nix
             home-manager.nixosModule
