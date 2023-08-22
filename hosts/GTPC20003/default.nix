@@ -45,4 +45,5 @@
   nix.settings.substituters = [
     "https://cache.iog.io"
   ];
+  security.pam.enableSudoTouchIdAuth = true;
 }
