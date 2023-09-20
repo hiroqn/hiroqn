@@ -16,7 +16,6 @@ in
   };
   home.packages = [
     pkgs.coreutils
-    pkgs.jq
     pkgs.nix-prefetch-git
     pkgs.openssh
     pkgs.vim
