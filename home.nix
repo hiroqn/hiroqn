@@ -10,16 +10,12 @@ in
   xdg = {
     enable = true;
     configFile."nixpkgs/config.nix".source = ./config.nix;
-    configFile."zellij/config.yaml" = {
-      source = ./zellij.yaml;
-    };
   };
   home.packages = [
     pkgs.coreutils
     pkgs.nix-prefetch-git
     pkgs.openssh
     pkgs.vim
-    pkgs.zellij
   ];
   home.stateVersion = "22.05";
   programs.atuin = {
@@ -37,6 +33,10 @@ in
   };
   programs.starship = {
     enable = true;
+  };
+  programs.zellij = {
+    enable = true;
+    enableZshIntegration = true;
   };
   programs.zsh = {
     enable = true;
