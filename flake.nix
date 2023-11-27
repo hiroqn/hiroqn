@@ -76,9 +76,11 @@
                 # home-manager
                 home-manager = {
                   users.hiroqn.imports = [
+                    codex.hmModule."x86_64-linux"
                     ./home.nix
                     ./hosts/utm-vf-intel/home.nix
                   ];
+                  users.hiroqn.codex.enable = true;
                   useGlobalPkgs = true;
                   useUserPackages = true;
                 };
