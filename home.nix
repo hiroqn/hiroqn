@@ -36,7 +36,6 @@ in
   };
   programs.zellij = {
     enable = true;
-    enableZshIntegration = true;
   };
   programs.zsh = {
     enable = true;
