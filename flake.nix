@@ -6,7 +6,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/134deb46abd5d0889d913b8509413f6f38b0811e";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     codex.url = "github:herp-inc/codex";
 
