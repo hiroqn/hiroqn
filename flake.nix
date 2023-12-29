@@ -2,7 +2,7 @@
   description = "hiroqn env";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/6e8611a7bc9fdd7d60f4052b01dc3c2790c84228";
+    nixpkgs.url = "github:NixOS/nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
