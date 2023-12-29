@@ -6,6 +6,31 @@
   programs.git = {
     iniContent.credential.helper = "osxkeychain";
   };
+  programs.ssh = {
+    enable = true;
+    matchBlocks =
+      let
+        opAgentOption = {
+          IdentityAgent = ''"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"'';
+        };
+      in
+      {
+        raspberrypi = {
+          host = "raspberrypi.local";
+          user = "pi";
+          extraOptions = opAgentOption;
+        };
+        utm-vf-intel = {
+          host = "192.168.64.2";
+          user = "hiroqn";
+          extraOptions = opAgentOption;
+        };
+        codex-workspace = {
+          extraOptions = opAgentOption;
+        };
+      };
+  };
+  codex.enableWorkspace = true;
   targets.darwin.defaults = {
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
