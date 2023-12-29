@@ -95,6 +95,7 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
+  nix.package = pkgs.nixUnstable;
   nix.settings.trusted-users = [ "root" "hiroqn" ];
   nix.settings.max-jobs = "auto";
   nix.settings.cores = 0;
