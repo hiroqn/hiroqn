@@ -29,7 +29,7 @@
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
   nix.configureBuildUsers = true;
-  nix.package = pkgs.nixStable;
+  nix.package = pkgs.nixUnstable;
   nix.settings.max-jobs = 16;
   nix.settings.cores = 16;
   nix.extraOptions = ''
