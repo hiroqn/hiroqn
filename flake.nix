@@ -4,15 +4,12 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
-    darwin.url = "github:LnL7/nix-darwin";
+    darwin.url = "github:hiroqn/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    codex.url = "github:herp-inc/codex";
-
     BlackHole.url = "github:hiroqn/nix-BlackHole";
     BlackHole.inputs.nixpkgs.follows = "nixpkgs";
-
     vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
@@ -22,13 +19,11 @@
     , darwin
     , nixpkgs
     , home-manager
-    , codex
     , BlackHole
     , vscode-server
     , ...
     }:
     {
-      nixpkgs = nixpkgs;
       darwinConfigurations."GTPC20003" = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         modules = [
@@ -44,11 +39,9 @@
               # home-manager
               home-manager = {
                 users.hiroqn.imports = [
-                  codex.hmModule."x86_64-darwin"
                   ./home.nix
                   ./hosts/GTPC20003/home.nix
                 ];
-                users.hiroqn.codex.enable = true;
                 useGlobalPkgs = true;
                 useUserPackages = true;
               };
@@ -76,11 +69,9 @@
                 # home-manager
                 home-manager = {
                   users.hiroqn.imports = [
-                    codex.hmModule."x86_64-linux"
                     ./home.nix
                     ./hosts/utm-vf-intel/home.nix
                   ];
-                  users.hiroqn.codex.enable = true;
                   useGlobalPkgs = true;
                   useUserPackages = true;
                 };

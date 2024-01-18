@@ -52,9 +52,6 @@ in
     inherit shellAliases;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-    initExtraFirst = ''
-      export FPATH
-    '';
     initExtra = ''
       setopt print_eight_bit        # 日本語ファイル名を表示可能にする
       setopt no_flow_control        # フローコントロールを無効にする
@@ -78,20 +75,7 @@ in
           hash -d git=
         fi
       }
-      export COMPINIT_DIFF=""
-      _chpwd_compinit() {
-        if [ -n "$IN_NIX_SHELL" -a "$COMPINIT_DIFF" != "$DIRENV_DIFF" ]; then
-          compinit -u
-          COMPINIT_DIFF="$DIRENV_DIFF"
-          echo "compinited !"
-        fi
-      }
-      if [[ -z ''${precmd_functions[(r)_chpwd_compinit]} ]]; then
-        precmd_functions=( ''${precmd_functions[@]} _chpwd_compinit )
-      fi
-      if [[ -z ''${chpwd_functions[(r)_chpwd_compinit]} ]]; then
-        chpwd_functions=( ''${chpwd_functions[@]} _chpwd_compinit )
-      fi
+
       chpwd_static_named_directory
       add-zsh-hook chpwd chpwd_static_named_directory
       source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh

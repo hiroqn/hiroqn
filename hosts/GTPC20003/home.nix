@@ -25,12 +25,8 @@
           user = "hiroqn";
           extraOptions = opAgentOption;
         };
-        codex-workspace = {
-          extraOptions = opAgentOption;
-        };
       };
   };
-  codex.enableWorkspace = true;
   targets.darwin.defaults = {
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
