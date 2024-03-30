@@ -80,9 +80,6 @@ in
       add-zsh-hook chpwd chpwd_static_named_directory
       source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
     '';
-    dirHashes = {
-      dev = "$HOME/.dev";
-    };
   };
   programs.direnv = {
     enable = true;

@@ -53,6 +53,31 @@
         ];
       };
 
+      darwinConfigurations."GTPC24003" = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          ({ pkgs, ... }:
+            {
+              nix.nixPath = [
+                {
+                  inherit nixpkgs;
+                }
+                "/nix/var/nix/profiles/per-user/root/channels"
+                "$HOME/.nix-defexpr/channels"
+              ];
+              # home-manager
+              home-manager = {
+                users.hiroqn.imports = [
+                  ./home.nix
+                ];
+                useGlobalPkgs = true;
+                useUserPackages = true;
+              };
+            })
+          ./hosts/GTPC24003/default.nix
+          home-manager.darwinModule
+        ];
+      };
       nixosConfigurations = {
         # UTM with Virtualization framework
         utm-vf-intel = nixpkgs.lib.nixosSystem {
