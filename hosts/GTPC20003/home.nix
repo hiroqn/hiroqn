@@ -52,4 +52,5 @@
       show-recents = 0;
     };
   };
+  home.stateVersion = "22.05";
 }

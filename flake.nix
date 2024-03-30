@@ -51,7 +51,6 @@
                 ];
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                home.stateVersion = "22.05";
               };
               system.stateVersion = 4;
               BlackHole.enable = true;
@@ -75,7 +74,6 @@
                 ];
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                home.stateVersion = "24.05";
               };
               system.stateVersion = 4;
             })
