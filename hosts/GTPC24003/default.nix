@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 {
-  
+
   # for some build
   nixpkgs.config.allowUnfree = true;
 
