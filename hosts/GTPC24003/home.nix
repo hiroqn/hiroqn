@@ -43,7 +43,7 @@
     "com.apple.dock" = {
       orientation = "left";
       show-recents = 0;
-      persistent-apps = [];
+      persistent-apps = [ ];
     };
   };
   home.stateVersion = "24.05";
