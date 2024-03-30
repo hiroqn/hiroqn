@@ -17,7 +17,7 @@ in
     pkgs.openssh
     pkgs.vim
   ];
-  home.stateVersion = "22.05";
+  
   programs.atuin = {
     enable = true;
     settings = {

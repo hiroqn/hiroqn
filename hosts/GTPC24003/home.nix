@@ -48,4 +48,5 @@
       show-recents = 0;
     };
   };
+  home.stateVersion = "24.05";
 }
