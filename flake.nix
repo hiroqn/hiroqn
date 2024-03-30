@@ -25,20 +25,25 @@
     , vscode-server
     , ...
     }:
+    let
+      commonNix = { pkgs, ... }:
+        {
+          nix.nixPath = [
+            {
+              inherit nixpkgs;
+            }
+            "$HOME/.nix-defexpr/channels"
+          ];
+        };
+    in
     {
       darwinConfigurations."GTPC20003" = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         modules = [
+          ./darwin.nix
+          commonNix
           ({ pkgs, ... }:
             {
-              nix.nixPath = [
-                {
-                  inherit nixpkgs;
-                }
-                "/nix/var/nix/profiles/per-user/root/channels"
-                "$HOME/.nix-defexpr/channels"
-              ];
-              # home-manager
               home-manager = {
                 users.hiroqn.imports = [
                   ./home.nix
@@ -58,16 +63,10 @@
       darwinConfigurations."GTPC24003" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
+          ./darwin.nix
+          commonNix
           ({ pkgs, ... }:
             {
-              nix.nixPath = [
-                {
-                  inherit nixpkgs;
-                }
-                "/nix/var/nix/profiles/per-user/root/channels"
-                "$HOME/.nix-defexpr/channels"
-              ];
-              # home-manager
               home-manager = {
                 users.hiroqn.imports = [
                   ./home.nix

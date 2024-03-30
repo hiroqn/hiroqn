@@ -1,8 +1,5 @@
 { pkgs, config, ... }:
 {
-  # for some build
-  nixpkgs.config.allowUnfree = true;
-
   users.users.hiroqn.name = "hiroqn";
   users.users.hiroqn.home = "/Users/hiroqn";
 
@@ -16,9 +13,6 @@
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;
   programs.zsh.enable = true;
@@ -29,13 +23,9 @@
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
   nix.configureBuildUsers = true;
-  nix.package = pkgs.nixUnstable;
+
   nix.settings.max-jobs = 16;
   nix.settings.cores = 16;
-  nix.extraOptions = ''
-    netrc-file = /etc/nix/netrc
-    experimental-features = nix-command flakes
-  '';
   nix.envVars = {
     NIX_CURL_FLAGS = "--netrc-file /etc/nix/netrc";
   };
