@@ -17,7 +17,7 @@ in
     pkgs.openssh
     pkgs.vim
   ];
-  
+
   programs.atuin = {
     enable = true;
     settings = {
