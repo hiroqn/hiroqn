@@ -11,6 +11,8 @@
     BlackHole.url = "github:hiroqn/nix-BlackHole";
     BlackHole.inputs.nixpkgs.follows = "nixpkgs";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
+    vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+    vscode-server.inputs.flake-utils.follows = "flake-utils";
   };
 
   outputs =
