@@ -27,8 +27,4 @@
   nix.settings.cores = 8;
 
   security.pam.enableSudoTouchIdAuth = true;
-  # system
-  # Used for backwards compatibility, please read the changelog before changing.
-  # $ darwin-rebuild changelog
-  system.stateVersion = 4;
 }

@@ -51,7 +51,9 @@
                 ];
                 useGlobalPkgs = true;
                 useUserPackages = true;
+                home.stateVersion = "22.05";
               };
+              system.stateVersion = 4;
               BlackHole.enable = true;
             })
           ./hosts/GTPC20003/default.nix
@@ -73,7 +75,9 @@
                 ];
                 useGlobalPkgs = true;
                 useUserPackages = true;
+                home.stateVersion = "24.05";
               };
+              system.stateVersion = 4;
             })
           ./hosts/GTPC24003/default.nix
           home-manager.darwinModule

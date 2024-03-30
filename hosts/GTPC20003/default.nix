@@ -9,10 +9,6 @@
   environment.variables.EDITOR = "${pkgs.vim}/bin/vim";
   environment.variables.LANG = "en_US.UTF-8";
 
-  # Used for backwards compatibility, please read the changelog before changing.
-  # $ darwin-rebuild changelog
-  system.stateVersion = 4;
-
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;
   programs.zsh.enable = true;
