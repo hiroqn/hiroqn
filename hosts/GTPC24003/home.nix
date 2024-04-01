@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 {
-  home.packages = [
-    pkgs.terminal-notifier
-  ];
   programs.git = {
     iniContent.credential.helper = "osxkeychain";
+  };
+  programs.zsh.dirHashes = {
+    gh = "$HOME/GitHub";
   };
   programs.ssh = {
     enable = true;
@@ -31,26 +31,20 @@
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
       ApplePressAndHoldEnabled = false;
-      InitialKeyRepeat = 25;
-      KeyRepeat = 3;
       NSAutomaticCapitalizationEnabled = false;
-      "com.apple.trackpad.scaling" = "2.5";
-      "com.apple.trackpad.scrolling" = "0.4412";
     };
     "com.apple.Accessibility" = {
       KeyRepeatEnabled = 0;
     };
-    "com.apple.AppleMultitouchTrackpad" = {
-      Clicking = true;
-      FirstClickThreshold = 0;
-      SecondClickThreshold = 0;
-    };
-    "com.apple.driver.AppleBluetoothMultitouch.trackpad" = {
-      Clicking = true;
+    "com.apple.finder" = {
+      AppleShowAllFiles = true;
+      ShowPathbar = true;
     };
     "com.apple.dock" = {
+      orientation = "left";
       show-recents = 0;
+      persistent-apps = [ ];
     };
   };
-  home.stateVersion = "22.05";
+  home.stateVersion = "24.05";
 }

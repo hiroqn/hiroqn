@@ -11,6 +11,8 @@
     BlackHole.url = "github:hiroqn/nix-BlackHole";
     BlackHole.inputs.nixpkgs.follows = "nixpkgs";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
+    vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+    vscode-server.inputs.flake-utils.follows = "flake-utils";
   };
 
   outputs =
@@ -23,20 +25,25 @@
     , vscode-server
     , ...
     }:
+    let
+      commonNix = { pkgs, ... }:
+        {
+          nix.nixPath = [
+            {
+              inherit nixpkgs;
+            }
+            "$HOME/.nix-defexpr/channels"
+          ];
+        };
+    in
     {
       darwinConfigurations."GTPC20003" = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         modules = [
+          ./darwin.nix
+          commonNix
           ({ pkgs, ... }:
             {
-              nix.nixPath = [
-                {
-                  inherit nixpkgs;
-                }
-                "/nix/var/nix/profiles/per-user/root/channels"
-                "$HOME/.nix-defexpr/channels"
-              ];
-              # home-manager
               home-manager = {
                 users.hiroqn.imports = [
                   ./home.nix
@@ -45,6 +52,7 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
               };
+              system.stateVersion = 4;
               BlackHole.enable = true;
             })
           ./hosts/GTPC20003/default.nix
@@ -53,6 +61,26 @@
         ];
       };
 
+      darwinConfigurations."GTPC24003" = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          ./darwin.nix
+          commonNix
+          ({ pkgs, ... }:
+            {
+              home-manager = {
+                users.hiroqn.imports = [
+                  ./home.nix
+                ];
+                useGlobalPkgs = true;
+                useUserPackages = true;
+              };
+              system.stateVersion = 4;
+            })
+          ./hosts/GTPC24003/default.nix
+          home-manager.darwinModule
+        ];
+      };
       nixosConfigurations = {
         # UTM with Virtualization framework
         utm-vf-intel = nixpkgs.lib.nixosSystem {

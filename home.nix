@@ -17,7 +17,7 @@ in
     pkgs.openssh
     pkgs.vim
   ];
-  home.stateVersion = "22.05";
+
   programs.atuin = {
     enable = true;
     settings = {
@@ -26,6 +26,7 @@ in
   };
   programs.bash = {
     enable = true;
+    historySize = 0;
     inherit shellAliases;
   };
   programs.fzf = {
@@ -40,12 +41,7 @@ in
   programs.zsh = {
     enable = true;
     history = {
-      size = 10000;
-      save = 10000;
-      ignoreDups = true;
-      ignoreSpace = true;
-      extended = true;
-      share = true;
+      size = 0;
     };
     autocd = true;
     defaultKeymap = "emacs";
@@ -58,10 +54,6 @@ in
       setopt auto_pushd             # cd したら自動的にpushdする
       setopt pushd_ignore_dups      # 重複したディレクトリを追加しない
       setopt magic_equal_subst      # = の後はパス名として補完する
-      setopt hist_ignore_all_dups   # 同じコマンドをヒストリに残さない
-      setopt hist_save_nodups       # ヒストリファイルに保存するとき、すでに重複したコマンドがあったら古い方を削除する
-      setopt hist_reduce_blanks     # ヒストリに保存するときに余分なスペースを削除する
-      setopt inc_append_history     # ヒストリをインクリメンタルに追加する
       setopt auto_menu              # 補完候補が複数あるときに自動的に一覧表示する
       setopt globdots               # 明確なドットの指定なしで.から始まるファイルをマッチ
       setopt combining_chars        # Unicode の正規化に関する問題を吸収
@@ -80,9 +72,6 @@ in
       add-zsh-hook chpwd chpwd_static_named_directory
       source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
     '';
-    dirHashes = {
-      dev = "$HOME/.dev";
-    };
   };
   programs.direnv = {
     enable = true;

@@ -9,6 +9,12 @@
   environment.variables.EDITOR = "${pkgs.vim}/bin/vim";
   environment.variables.LANG = "en_US.UTF-8";
 
+  home-manager = {
+    users.hiroqn.imports = [
+      ./home.nix
+    ];
+  };
+
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;
   programs.zsh.enable = true;
@@ -16,20 +22,9 @@
   programs.zsh.enableCompletion = false;
   programs.zsh.promptInit = "";
 
-  programs.gnupg.agent.enable = true;
-  programs.gnupg.agent.enableSSHSupport = true;
-  nix.configureBuildUsers = true;
+  # m3 mac 
+  nix.settings.max-jobs = 8;
+  nix.settings.cores = 8;
 
-  nix.settings.max-jobs = 16;
-  nix.settings.cores = 16;
-  nix.envVars = {
-    NIX_CURL_FLAGS = "--netrc-file /etc/nix/netrc";
-  };
-  nix.settings.trusted-public-keys = [
-    "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-  ];
-  nix.settings.substituters = [
-    "https://cache.iog.io"
-  ];
   security.pam.enableSudoTouchIdAuth = true;
 }
