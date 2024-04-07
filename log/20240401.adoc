@@ -1,0 +1,16 @@
+== 主な手順
+
+. nixをインストール
+. このレポをclone
+. 新しいhostを追加
+. darwin-rebuild switch
+
+== 手動で入れたもの
+. UTM.App
+. 1Password
+. Rectangle
+. GitHub Desktop
+
+== 手動の設定
+. AppleWatchでのロック解除
+. 1PasswordのTouchId

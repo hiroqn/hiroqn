@@ -1,0 +1,7 @@
+. ` sh <(curl -L https://nixos.org/nix/install) --daemon --darwin-use-unencrypted-nix-store-volume`
+. clone this repo with `nix-shell -p git`
+. install https://github.com/LnL7/nix-darwin/[nix-darwin] with manual
+.. `mkdir -p ~/Applications` (https://github.com/LnL7/nix-darwin/pull/226)
+.. `darwin-rebuild switch`
+.. `rm /etc/zshrc` (https://github.com/LnL7/nix-darwin/issues/158)
+.. `darwin-rebuild switch`
