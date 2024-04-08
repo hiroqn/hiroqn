@@ -103,4 +103,31 @@
     netrc-file = /etc/nix/netrc
     experimental-features = nix-command flakes
   '';
+  #    !include /et
+
+  programs.steam.enable = true;
+  #  programs.steam.package = pkgs.steam.overrideAttrs(f: p: {
+  #    src = pkgs.fetchurl {
+  #        # use archive url so the tarball doesn't 404 on a new release
+  #        url = "https://repo.steampowered.com/steam/archive/stable/steam_1.0.0.78.tar.gz";
+  #        sha256 = "sha256-EEJZdV1yEbXxAdskf/cOv+1q5so+FNphGV0fv5HHIA0=";
+  #      };
+  #  });
+  programs.steam.remotePlay.openFirewall = true;
+  programs.steam.dedicatedServer.openFirewall = true;
+  #  services.xserver = {
+  #    desktopManager.plasma5 = {
+  #      enable = true;
+  #    };
+  #
+  #    # Automatically login as nixos.
+  #    displayManager = {
+  #      sddm.enable = true;
+  #      autoLogin = {
+  #        enable = true;
+  #        user = "nixos";
+  #      };
+  #    };
+  #  };
+
 }
