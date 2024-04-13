@@ -28,12 +28,22 @@
     let
       commonNix = { pkgs, ... }:
         {
+          home-manager = {
+            users.hiroqn.imports = [
+              ./home.nix
+            ];
+            useGlobalPkgs = true;
+            useUserPackages = true;
+          };
           nix.nixPath = [
-            {
-              inherit nixpkgs;
-            }
+            "nixpkgs=${nixpkgs}"
             "$HOME/.nix-defexpr/channels"
           ];
+          nix.extraOptions = ''
+            experimental-features = nix-command flakes
+          '';
+          nixpkgs.config.allowUnfree = true;
+
         };
     in
     {
@@ -44,14 +54,6 @@
           commonNix
           ({ pkgs, ... }:
             {
-              home-manager = {
-                users.hiroqn.imports = [
-                  ./home.nix
-                  ./hosts/GTPC20003/home.nix
-                ];
-                useGlobalPkgs = true;
-                useUserPackages = true;
-              };
               system.stateVersion = 4;
               BlackHole.enable = true;
             })
@@ -68,13 +70,6 @@
           commonNix
           ({ pkgs, ... }:
             {
-              home-manager = {
-                users.hiroqn.imports = [
-                  ./home.nix
-                ];
-                useGlobalPkgs = true;
-                useUserPackages = true;
-              };
               system.stateVersion = 4;
             })
           ./hosts/GTPC24003/default.nix
@@ -86,26 +81,26 @@
         utm-vf-intel = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            commonNix
             ({ pkgs, ... }:
               {
-                nix.nixPath = [
-                  "nixpkgs=${nixpkgs}"
-                  "/nix/var/nix/profiles/per-user/root/channels"
-                  "$HOME/.nix-defexpr/channels"
-                ];
-
-                # home-manager
-                home-manager = {
-                  users.hiroqn.imports = [
-                    ./home.nix
-                    ./hosts/utm-vf-intel/home.nix
-                  ];
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                };
                 services.vscode-server.enable = true;
               })
             ./hosts/utm-vf-intel/default.nix
+            home-manager.nixosModule
+            vscode-server.nixosModules.default
+          ];
+        };
+
+        utm-aarch64-gnome = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [
+            commonNix
+            ({ pkgs, ... }:
+              {
+                services.vscode-server.enable = true;
+              })
+            ./hosts/utm-aarch64-gnome/default.nix
             home-manager.nixosModule
             vscode-server.nixosModules.default
           ];
