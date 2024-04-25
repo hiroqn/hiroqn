@@ -42,8 +42,16 @@
           nix.extraOptions = ''
             experimental-features = nix-command flakes
           '';
+          nix.registry = {
+            nixpkgs = {
+              from = { type = "indirect"; id = "nixpkgs"; };
+              to = {
+                type = "path";
+                path = "${nixpkgs}";
+              };
+            };
+          };
           nixpkgs.config.allowUnfree = true;
-
         };
     in
     {
