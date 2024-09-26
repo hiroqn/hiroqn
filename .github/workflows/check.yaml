@@ -8,7 +8,7 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
         token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: cachix/install-nix-action@ba0dd844c9180cbf77aa72a116d6fbc515d0e87b # v27
+    - uses: cachix/install-nix-action@9f70348d77d0422624097c4b7a75563948901306 # v29
       with:
         extra_nix_config: |
           experimental-features = nix-command flakes
