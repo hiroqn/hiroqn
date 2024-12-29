@@ -129,7 +129,7 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-  nix.package = pkgs.nixUnstable;
+  nix.package = pkgs.nixVersions.nix_2_24;
   nix.settings.trusted-users = [ "root" "hiroqn" ];
   nix.settings.max-jobs = "auto";
   nix.settings.cores = 0;

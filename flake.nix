@@ -10,9 +10,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     BlackHole.url = "github:hiroqn/nix-BlackHole";
     BlackHole.inputs.nixpkgs.follows = "nixpkgs";
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
-    vscode-server.inputs.nixpkgs.follows = "nixpkgs";
-    vscode-server.inputs.flake-utils.follows = "flake-utils";
   };
 
   outputs =
@@ -22,7 +19,6 @@
     , nixpkgs
     , home-manager
     , BlackHole
-    , vscode-server
     , ...
     }:
     let
@@ -64,6 +60,7 @@
             {
               system.stateVersion = 4;
               BlackHole.enable = true;
+              nixpkgs.source = nixpkgs;
             })
           ./hosts/GTPC20003/default.nix
           BlackHole.darwinModules.default
@@ -79,6 +76,7 @@
           ({ pkgs, ... }:
             {
               system.stateVersion = 4;
+              nixpkgs.source = nixpkgs;
             })
           ./hosts/GTPC24003/default.nix
           home-manager.darwinModule
@@ -86,31 +84,12 @@
       };
       nixosConfigurations = {
         # UTM with Virtualization framework
-        utm-vf-intel = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            commonNix
-            ({ pkgs, ... }:
-              {
-                services.vscode-server.enable = true;
-              })
-            ./hosts/utm-vf-intel/default.nix
-            home-manager.nixosModule
-            vscode-server.nixosModules.default
-          ];
-        };
-
         utm-aarch64-gnome = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = [
             commonNix
-            ({ pkgs, ... }:
-              {
-                services.vscode-server.enable = true;
-              })
             ./hosts/utm-aarch64-gnome/default.nix
             home-manager.nixosModule
-            vscode-server.nixosModules.default
           ];
         };
       };
