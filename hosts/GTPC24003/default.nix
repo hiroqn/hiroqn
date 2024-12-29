@@ -3,6 +3,9 @@
   users.users.hiroqn.name = "hiroqn";
   users.users.hiroqn.home = "/Users/hiroqn";
 
+  users.users.hiroqn-enterprise.name = "hiroqn-enterprise";
+  users.users.hiroqn-enterprise.home = "/Users/hiroqn-enterprise";
+  users.users.hiroqn-enterprise.createHome = true;
   environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
   environment.shells = [ pkgs.zsh pkgs.bash ];
   environment.variables.PAGER = "cat";
@@ -22,7 +25,7 @@
   programs.zsh.enableCompletion = false;
   programs.zsh.promptInit = "";
 
-  # m3 mac 
+  # m3 mac
   nix.settings.max-jobs = 8;
   nix.settings.cores = 8;
 
