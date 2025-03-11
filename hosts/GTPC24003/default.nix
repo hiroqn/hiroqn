@@ -3,7 +3,6 @@
   users.users.hiroqn.name = "hiroqn";
   users.users.hiroqn.home = "/Users/hiroqn";
 
-  environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
   environment.shells = [ pkgs.zsh pkgs.bash ];
   environment.variables.PAGER = "cat";
   environment.variables.EDITOR = "${pkgs.vim}/bin/vim";
@@ -22,9 +21,9 @@
   programs.zsh.enableCompletion = false;
   programs.zsh.promptInit = "";
 
-  # m3 mac 
+  # m3 mac
   nix.settings.max-jobs = 8;
   nix.settings.cores = 8;
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 }
