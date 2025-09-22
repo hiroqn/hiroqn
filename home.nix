@@ -48,7 +48,7 @@ in
     inherit shellAliases;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-    initExtra = ''
+    initContent = ''
       setopt print_eight_bit        # 日本語ファイル名を表示可能にする
       setopt no_flow_control        # フローコントロールを無効にする
       setopt auto_pushd             # cd したら自動的にpushdする
@@ -79,12 +79,17 @@ in
   };
   programs.git = {
     enable = true;
-    userEmail = "909385+hiroqn@users.noreply.github.com";
+    userEmail = "hiroqn@herp.co.jp";
     userName = "hiroqn";
     signing.key = "C3BF7281D87D87084E332DDC4F22B8FA3412D901";
     lfs.enable = true;
     delta.enable = true;
-    ignores = [ ".idea" ".DS_Store" "*.iml" ".direnv" ];
+    ignores = [
+      ".idea"
+      ".DS_Store"
+      "*.iml"
+      ".direnv"
+    ];
   };
   programs.alacritty = {
     enable = true;

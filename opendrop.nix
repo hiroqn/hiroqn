@@ -1,4 +1,10 @@
-{ stdenv, fetchFromGitHub, python3, libarchive, openssl }:
+{
+  stdenv,
+  fetchFromGitHub,
+  python3,
+  libarchive,
+  openssl,
+}:
 let
   ctypescrypto = python3.pkgs.buildPythonPackage rec {
     pname = "ctypescrypto";
@@ -25,7 +31,7 @@ let
       inherit pname version;
       sha256 = "1zkxhasx156h1zmr2m21r9mmazx98qgqpdwsjdr7a296c3qkhvgn";
     };
-    propagatedBuildInputs = with python3.pkgs;[ ifaddr ];
+    propagatedBuildInputs = with python3.pkgs; [ ifaddr ];
   };
   static_openssl = openssl.override { static = true; };
 in
@@ -41,8 +47,21 @@ python3.pkgs.buildPythonApplication {
     export DYLD_LIBRARY_PATH="${static_openssl.out}/lib:${libarchive}/lib"
   '';
   doCheck = false;
-  buildInputs = [ static_openssl libarchive ];
-  propagatedBuildInputs = with python3.pkgs; [ setuptools pillow ctypescrypto fleep ifaddr libarchive-c requests requests_toolbelt zeroconf_0_24 ];
+  buildInputs = [
+    static_openssl
+    libarchive
+  ];
+  propagatedBuildInputs = with python3.pkgs; [
+    setuptools
+    pillow
+    ctypescrypto
+    fleep
+    ifaddr
+    libarchive-c
+    requests
+    requests_toolbelt
+    zeroconf_0_24
+  ];
   makeFlags = [ "PYTHON=$(python3)/bin/python3" ];
   makeWrapperArgs = [ "--set DYLD_LIBRARY_PATH ${static_openssl.out}/lib:${libarchive}/lib" ];
 }
