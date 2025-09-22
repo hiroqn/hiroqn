@@ -5,11 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
   home-manager = {
     users.hiroqn.imports = [
       ./home.nix
@@ -67,7 +66,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable is deprecated, removing it
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -94,7 +93,10 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "hiroqn";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       xclip
       firefox
@@ -130,7 +132,10 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   nix.package = pkgs.nixVersions.nix_2_24;
-  nix.settings.trusted-users = [ "root" "hiroqn" ];
+  nix.settings.trusted-users = [
+    "root"
+    "hiroqn"
+  ];
   nix.settings.max-jobs = "auto";
   nix.settings.cores = 0;
   # This value determines the NixOS release from which the default
