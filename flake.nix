@@ -42,6 +42,7 @@
                 {
                   system.stateVersion = 4;
                   nixpkgs.source = inputs.nixpkgs;
+                  nix.settings.trusted-users = [ "hiroqn" ];
                 }
               )
               ./hosts/GTPC24003/default.nix
