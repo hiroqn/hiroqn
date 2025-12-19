@@ -4,8 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     BlackHole.url = "github:hiroqn/nix-BlackHole";
@@ -13,7 +13,13 @@
   };
 
   outputs =
-    inputs@{ flake-parts, ... }:
+    inputs@{
+      self,
+      flake-parts,
+      nix-darwin,
+      home-manager,
+      ...
+    }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "x86_64-darwin"
@@ -27,11 +33,10 @@
 
       flake = {
         darwinConfigurations = {
-          "GTPC24003" = inputs.darwin.lib.darwinSystem {
+          "GTPC24003" = nix-darwin.lib.darwinSystem {
             system = "aarch64-darwin";
             modules = [
-              ./darwin.nix
-              (inputs.self.lib.commonNix inputs.nixpkgs)
+              (self.lib.commonNix inputs.nixpkgs)
               (
                 { pkgs, ... }:
                 {
@@ -40,7 +45,7 @@
                 }
               )
               ./hosts/GTPC24003/default.nix
-              inputs.home-manager.darwinModules.home-manager
+              home-manager.darwinModules.home-manager
             ];
           };
         };
@@ -50,9 +55,9 @@
           utm-aarch64-gnome = inputs.nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
             modules = [
-              (inputs.self.lib.commonNix inputs.nixpkgs)
+              (self.lib.commonNix inputs.nixpkgs)
               ./hosts/utm-aarch64-gnome/default.nix
-              inputs.home-manager.nixosModules.home-manager
+              home-manager.nixosModules.home-manager
             ];
           };
         };
@@ -72,6 +77,7 @@
               nix.nixPath = [
                 "nixpkgs=${nixpkgs}"
               ];
+
               nix.extraOptions = ''
                 experimental-features = nix-command flakes
               '';

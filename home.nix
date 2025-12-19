@@ -84,6 +84,39 @@ in
     signing.key = "C3BF7281D87D87084E332DDC4F22B8FA3412D901";
     lfs.enable = true;
     delta.enable = true;
+    extraConfig = {
+      column.ui = "auto";
+      branch.sort = "-committerdate";
+      tag.sort = "version:refname";
+      diff = {
+        algorithm = "histogram";
+        colorMoved = "plain";
+        mnemonicPrefix = "true";
+        refname = "true";
+      };
+      credential.helper = "${pkgs.gh}/bin/gh auth git-credential";
+      merge.conflictstyle = "zdiff3";
+      push = {
+        default = "simple";
+        autoSetupRemote = "true";
+        followTags = "true";
+      };
+      fetch = {
+        prune = "true";
+        pruneTags = "true";
+        all = "true";
+      };
+      help.autocorrect = "prompt";
+      commit.verbose = "true";
+      rerere.enabled = "true";
+      rerere.autoupdate = "true";
+      rebase = {
+        autoStash = "true";
+        autoSquash = "true";
+        updateRefs = "true";
+      };
+    };
+
     ignores = [
       ".idea"
       ".DS_Store"

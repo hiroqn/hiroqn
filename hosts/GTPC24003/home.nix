@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 {
-  programs.git = {
-    iniContent.credential.helper = "osxkeychain";
-  };
   programs.zsh.dirHashes = {
     gh = "$HOME/GitHub";
   };
@@ -21,7 +18,7 @@
           extraOptions = opAgentOption;
         };
         utm-vf-intel = {
-          host = "192.168.64.2";
+          host = "192.168.64.3";
           user = "hiroqn";
           extraOptions = opAgentOption;
         };
