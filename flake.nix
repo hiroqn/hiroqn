@@ -4,8 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     BlackHole.url = "github:hiroqn/nix-BlackHole";
@@ -16,7 +14,6 @@
     inputs@{
       self,
       flake-parts,
-      nix-darwin,
       home-manager,
       ...
     }:
@@ -32,24 +29,21 @@
       ];
 
       flake = {
-        darwinConfigurations = {
-          "GTPC24003" = nix-darwin.lib.darwinSystem {
-            system = "aarch64-darwin";
-            modules = [
-              (self.lib.commonNix inputs.nixpkgs)
-              (
-                { pkgs, ... }:
-                {
-                  system.stateVersion = 4;
-                  nixpkgs.source = inputs.nixpkgs;
-                  nix.settings.trusted-users = [ "hiroqn" ];
-                }
-              )
-              ./hosts/GTPC24003/default.nix
-              home-manager.darwinModules.home-manager
-            ];
+        darwinModules.default =
+          { pkgs, ... }:
+          {
+            home-manager = {
+              users.hiroqn.imports = [
+                ./home.nix
+              ];
+              useGlobalPkgs = true;
+              useUserPackages = true;
+            };
+            system.stateVersion = 4;
+            nix.settings.trusted-users = [ "hiroqn" ];
           };
-        };
+
+        darwinModules.GTPC24003 = import ./hosts/GTPC24003/default.nix;
 
         nixosConfigurations = {
           # UTM with Virtualization framework
@@ -68,32 +62,6 @@
             nixpkgs:
             { pkgs, ... }:
             {
-              home-manager = {
-                users.hiroqn.imports = [
-                  ./home.nix
-                ];
-                useGlobalPkgs = true;
-                useUserPackages = true;
-              };
-              nix.nixPath = [
-                "nixpkgs=${nixpkgs}"
-              ];
-
-              nix.extraOptions = ''
-                experimental-features = nix-command flakes
-              '';
-              nix.registry = {
-                nixpkgs = {
-                  from = {
-                    type = "indirect";
-                    id = "nixpkgs";
-                  };
-                  to = {
-                    type = "path";
-                    path = "${nixpkgs}";
-                  };
-                };
-              };
               nixpkgs.config.allowUnfree = true;
             };
         };
