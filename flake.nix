@@ -37,9 +37,7 @@
                 ./home.nix
               ];
               useGlobalPkgs = true;
-              useUserPackages = true;
             };
-            system.stateVersion = 4;
             nix.settings.trusted-users = [ "hiroqn" ];
           };
 
