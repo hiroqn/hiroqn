@@ -5,44 +5,29 @@ let
     lal = "ls -a -lA";
     greo = "grep --colour=auto";
   };
-in
-{
+in {
   xdg = {
     enable = true;
     configFile."nixpkgs/config.nix".source = ./config.nix;
   };
-  home.packages = [
-    pkgs.coreutils
-    pkgs.nix-prefetch-git
-    pkgs.openssh
-    pkgs.vim
-  ];
+  home.packages =
+    [ pkgs.coreutils pkgs.nix-prefetch-git pkgs.openssh pkgs.vim ];
 
   programs.atuin = {
     enable = true;
-    settings = {
-      update_check = false;
-    };
+    settings = { update_check = false; };
   };
   programs.bash = {
     enable = true;
     historySize = 0;
     inherit shellAliases;
   };
-  programs.fzf = {
-    enable = true;
-  };
-  programs.starship = {
-    enable = true;
-  };
-  programs.zellij = {
-    enable = true;
-  };
+  programs.fzf = { enable = true; };
+  programs.starship = { enable = true; };
+  programs.zellij = { enable = true; };
   programs.zsh = {
     enable = true;
-    history = {
-      size = 0;
-    };
+    history = { size = 0; };
     autocd = true;
     defaultKeymap = "emacs";
     inherit shellAliases;
@@ -79,8 +64,6 @@ in
   };
   programs.git = {
     enable = true;
-    userEmail = "hiroqn@herp.co.jp";
-    userName = "hiroqn";
     signing.key = "C3BF7281D87D87084E332DDC4F22B8FA3412D901";
     lfs.enable = true;
     delta.enable = true;
@@ -94,6 +77,7 @@ in
         mnemonicPrefix = "true";
         refname = "true";
       };
+
       credential.helper = "${pkgs.gh}/bin/gh auth git-credential";
       merge.conflictstyle = "zdiff3";
       push = {
@@ -116,13 +100,16 @@ in
         updateRefs = "true";
       };
     };
-
-    ignores = [
-      ".idea"
-      ".DS_Store"
-      "*.iml"
-      ".direnv"
-    ];
+    includes = [{
+      condition = "gitdir:~/GitHub/hiroqn/";
+      contents = {
+        user = {
+          name = "hiroqn";
+          email = "909385+hiroqn@users.noreply.github.com";
+        };
+      };
+    }];
+    ignores = [ ".idea" ".DS_Store" "*.iml" ".direnv" ];
   };
   programs.alacritty = {
     enable = true;

@@ -8,38 +8,25 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     BlackHole.url = "github:hiroqn/nix-BlackHole";
     BlackHole.inputs.nixpkgs.follows = "nixpkgs";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    inputs@{
-      self,
-      flake-parts,
-      home-manager,
-      ...
-    }:
+  outputs = inputs@{ self, flake-parts, home-manager, treefmt-nix, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-darwin"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "aarch64-linux"
-      ];
+      systems =
+        [ "x86_64-darwin" "x86_64-linux" "aarch64-darwin" "aarch64-linux" ];
 
-      imports = [
-      ];
+      imports = [ treefmt-nix.flakeModule ];
 
       flake = {
-        darwinModules.default =
-          { pkgs, ... }:
-          {
-            home-manager = {
-              users.hiroqn.imports = [
-                ./home.nix
-              ];
-              useGlobalPkgs = true;
-            };
-            nix.settings.trusted-users = [ "hiroqn" ];
+        darwinModules.default = { pkgs, ... }: {
+          home-manager = {
+            users.hiroqn.imports = [ ./home.nix ];
+            useGlobalPkgs = true;
           };
+          nix.settings.trusted-users = [ "hiroqn" ];
+        };
 
         darwinModules.GTPC24003 = import ./hosts/GTPC24003/default.nix;
 
@@ -56,28 +43,22 @@
         };
 
         lib = {
-          commonNix =
-            nixpkgs:
-            { pkgs, ... }:
-            {
+          commonNix = nixpkgs:
+            { pkgs, ... }: {
               nixpkgs.config.allowUnfree = true;
             };
         };
       };
 
-      perSystem =
-        { pkgs, ... }:
-        {
-          formatter = pkgs.nixfmt-tree;
-
-          devShells.default = pkgs.mkShell {
-            buildInputs = [
-              pkgs.otel-cli
-            ];
-            shellHook = ''
-              # ...
-            '';
-          };
+      perSystem = { pkgs, ... }: {
+        devShells.default = pkgs.mkShell {
+          buildInputs = [ pkgs.otel-cli ];
+          shellHook = ''
+            # ...
+          '';
         };
+        treefmt = { programs = { nixfmt.enable = true; }; };
+      };
+
     };
 }
