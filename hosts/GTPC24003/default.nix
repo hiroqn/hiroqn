@@ -1,21 +1,13 @@
-{ pkgs, config, ... }:
-{
+{ pkgs, config, ... }: {
   users.users.hiroqn.name = "hiroqn";
   users.users.hiroqn.home = "/Users/hiroqn";
 
-  environment.shells = [
-    pkgs.zsh
-    pkgs.bash
-  ];
+  environment.shells = [ pkgs.zsh pkgs.bash ];
   environment.variables.PAGER = "cat";
   environment.variables.EDITOR = "${pkgs.vim}/bin/vim";
   environment.variables.LANG = "en_US.UTF-8";
 
-  home-manager = {
-    users.hiroqn.imports = [
-      ./home.nix
-    ];
-  };
+  home-manager = { users.hiroqn.imports = [ ./home.nix ]; };
 
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;

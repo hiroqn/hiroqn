@@ -1,10 +1,4 @@
-{
-  stdenv,
-  fetchFromGitHub,
-  python3,
-  libarchive,
-  openssl,
-}:
+{ stdenv, fetchFromGitHub, python3, libarchive, openssl, }:
 let
   ctypescrypto = python3.pkgs.buildPythonPackage rec {
     pname = "ctypescrypto";
@@ -34,8 +28,7 @@ let
     propagatedBuildInputs = with python3.pkgs; [ ifaddr ];
   };
   static_openssl = openssl.override { static = true; };
-in
-python3.pkgs.buildPythonApplication {
+in python3.pkgs.buildPythonApplication {
   name = "opendrop";
   src = fetchFromGitHub {
     owner = "seemoo-lab";
@@ -47,10 +40,7 @@ python3.pkgs.buildPythonApplication {
     export DYLD_LIBRARY_PATH="${static_openssl.out}/lib:${libarchive}/lib"
   '';
   doCheck = false;
-  buildInputs = [
-    static_openssl
-    libarchive
-  ];
+  buildInputs = [ static_openssl libarchive ];
   propagatedBuildInputs = with python3.pkgs; [
     setuptools
     pillow
@@ -63,5 +53,6 @@ python3.pkgs.buildPythonApplication {
     zeroconf_0_24
   ];
   makeFlags = [ "PYTHON=$(python3)/bin/python3" ];
-  makeWrapperArgs = [ "--set DYLD_LIBRARY_PATH ${static_openssl.out}/lib:${libarchive}/lib" ];
+  makeWrapperArgs =
+    [ "--set DYLD_LIBRARY_PATH ${static_openssl.out}/lib:${libarchive}/lib" ];
 }
