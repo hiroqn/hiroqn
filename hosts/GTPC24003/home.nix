@@ -2,6 +2,7 @@
   programs.zsh.dirHashes = { gh = "$HOME/GitHub"; };
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     matchBlocks = let
       opAgentOption = {
         IdentityAgent = ''
@@ -11,11 +12,6 @@
       raspberrypi = {
         host = "raspberrypi.local";
         user = "pi";
-        extraOptions = opAgentOption;
-      };
-      utm-vf-intel = {
-        host = "192.168.64.3";
-        user = "hiroqn";
         extraOptions = opAgentOption;
       };
     };
