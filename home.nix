@@ -12,7 +12,9 @@ in {
   };
   home.packages =
     [ pkgs.coreutils pkgs.nix-prefetch-git pkgs.openssh pkgs.vim ];
-
+  home.sessionVariables = {
+    TF_PLUGIN_CACHE_DIR = "$HOME/.terraform.d/plugin-cache";
+  };
   programs.atuin = {
     enable = true;
     settings = { update_check = false; };
@@ -62,12 +64,13 @@ in {
     enable = true;
     nix-direnv.enable = true;
   };
+  programs.delta.enable = true;
+  programs.delta.enableGitIntegration = true;
   programs.git = {
     enable = true;
     signing.key = "C3BF7281D87D87084E332DDC4F22B8FA3412D901";
     lfs.enable = true;
-    delta.enable = true;
-    extraConfig = {
+    settings = {
       column.ui = "auto";
       branch.sort = "-committerdate";
       tag.sort = "version:refname";
