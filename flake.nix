@@ -106,7 +106,8 @@
         packages.aarch64-linux.colima-image = colima-aarch64.config.system.build.images.qemu-efi;
       };
 
-      perSystem = { pkgs, ... }:
+      perSystem =
+        { pkgs, ... }:
         let
           lore = pkgs.callPackage ./packages/lore { };
         in
