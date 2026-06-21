@@ -1,0 +1,20 @@
+# Test template for the custom NixOS image without Colima.
+# Uses macOS Virtualization.Framework (VZ), not QEMU.
+# Usage: limactl start --name=colima-nixos ./hosts/colima-aarch64/lima.yaml
+arch: "aarch64"
+images:
+  - location: "/Users/hiroqn/.local/share/colima/nixos.qcow2"
+    arch: "aarch64"
+vmType: "vz"
+mountType: "virtiofs"
+mounts:
+  - location: "~"
+    writable: true
+  - location: "~/GitHub"
+    writable: true
+provision:
+  - mode: system
+    script: |
+      #!/bin/bash
+      set -eux -o pipefail
+      true
