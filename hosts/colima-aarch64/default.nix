@@ -62,6 +62,8 @@
 
   # Colima provision writes /etc/buildkit/buildkitd.toml; keep it off the Nix store path.
   systemd.tmpfiles.rules = [
+    "d /var/lib/buildkit 0755 root root -"
+    "d /etc/buildkit 0755 root root -"
     "f /var/lib/buildkit/buildkitd.toml 0644 root root - ${pkgs.writeText "buildkitd.toml" ''
       [worker.oci]
         enabled = false
@@ -70,6 +72,7 @@
         enabled = true
         namespace = "default"
     ''}"
+    "L+ /etc/buildkit/buildkitd.toml - - - - /var/lib/buildkit/buildkitd.toml"
   ];
 
   systemd.services.buildkit = {
@@ -93,23 +96,6 @@
       RestartSec = "5";
     };
   };
-
-  system.activationScripts.colimaBuildkitCompat = lib.stringAfter [ "setupSecrets" ] ''
-    mkdir -p /var/lib/buildkit /etc/buildkit
-    if [ ! -f /var/lib/buildkit/buildkitd.toml ]; then
-      ${pkgs.coreutils}/bin/cp --remove-destination \
-        ${pkgs.writeText "buildkitd.toml" ''
-          [worker.oci]
-            enabled = false
-
-          [worker.containerd]
-            enabled = true
-            namespace = "default"
-        ''} \
-        /var/lib/buildkit/buildkitd.toml
-    fi
-    ln -sfn /var/lib/buildkit/buildkitd.toml /etc/buildkit/buildkitd.toml
-  '';
 
   networking.hostName = "colima";
 

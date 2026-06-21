@@ -58,12 +58,15 @@
         "aarch64-linux"
       ];
 
-      imports = [ treefmt-nix.flakeModule ];
+      imports = [
+        treefmt-nix.flakeModule
+      ];
 
       flake = {
         inherit lib;
 
         darwinModules.default = { pkgs, ... }: {
+          imports = [ ./modules/nix-darwin/default.nix ];
           home-manager = {
             extraSpecialArgs = {
               inputs = {
@@ -78,10 +81,9 @@
             };
             users.hiroqn.imports = [
               inputs.agent-skills.homeManagerModules.default
-              ./home.nix
+              ./modules/home-manager/default.nix
               ./modules/home-manager/agent-skills.nix
             ];
-            useGlobalPkgs = true;
           };
           nix.settings.trusted-users = [ "hiroqn" ];
         };
@@ -105,8 +107,12 @@
       };
 
       perSystem = { pkgs, ... }: {
+        packages.lore = pkgs.callPackage ./packages/lore { };
+
         devShells.default = pkgs.mkShell {
-          buildInputs = [ pkgs.otel-cli ];
+          buildInputs = [
+            pkgs.callPackage ./packages/lore { }
+          ];
           shellHook = ''
             # ...
           '';
