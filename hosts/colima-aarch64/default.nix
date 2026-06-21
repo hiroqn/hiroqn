@@ -8,9 +8,7 @@
 
 {
   # Virtio guest profile for Lima/Colima on macOS VZ (not a QEMU runtime choice).
-  imports = [
-    (modulesPath + "/profiles/qemu-guest.nix")
-  ];
+  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -77,7 +75,11 @@
   systemd.services.buildkit = {
     description = "BuildKit";
     wantedBy = [ "multi-user.target" ];
-    after = [ "containerd.service" "network.target" "systemd-tmpfiles-setup.service" ];
+    after = [
+      "containerd.service"
+      "network.target"
+      "systemd-tmpfiles-setup.service"
+    ];
     requires = [ "containerd.service" ];
     path = with pkgs; [
       buildkit

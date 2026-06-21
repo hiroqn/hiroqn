@@ -2,9 +2,9 @@
   description = "hiroqn env";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     BlackHole.url = "github:hiroqn/nix-BlackHole";
     BlackHole.inputs.nixpkgs.follows = "nixpkgs";
@@ -27,13 +27,18 @@
     };
   };
 
-  outputs = inputs@{ flake-parts, home-manager, treefmt-nix, ... }:
+  outputs =
+    inputs@{
+      flake-parts,
+      home-manager,
+      treefmt-nix,
+      ...
+    }:
     let
       lib = {
-        commonNix = nixpkgs:
-          { pkgs, ... }: {
-            nixpkgs.config.allowUnfree = true;
-          };
+        commonNix = nixpkgs: { pkgs, ... }: {
+          nixpkgs.config.allowUnfree = true;
+        };
       };
 
       colima-aarch64 = inputs.nixpkgs.lib.nixosSystem {
@@ -47,8 +52,11 @@
       };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
-      systems =
-        [ "x86_64-linux" "aarch64-darwin" "aarch64-linux" ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+        "aarch64-linux"
+      ];
 
       imports = [ treefmt-nix.flakeModule ];
 
@@ -93,8 +101,7 @@
           inherit colima-aarch64;
         };
 
-        packages.aarch64-linux.colima-image =
-          colima-aarch64.config.system.build.images.qemu-efi;
+        packages.aarch64-linux.colima-image = colima-aarch64.config.system.build.images.qemu-efi;
       };
 
       perSystem = { pkgs, ... }: {
@@ -104,7 +111,11 @@
             # ...
           '';
         };
-        treefmt = { programs = { nixfmt.enable = true; }; };
+        treefmt = {
+          programs = {
+            nixfmt.enable = true;
+          };
+        };
       };
 
     };
