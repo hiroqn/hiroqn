@@ -5,31 +5,46 @@ let
     lal = "ls -a -lA";
     greo = "grep --colour=auto";
   };
-in {
+in
+{
   xdg = {
     enable = true;
     configFile."nixpkgs/config.nix".source = ./config.nix;
   };
-  home.packages =
-    [ pkgs.coreutils pkgs.nix-prefetch-git pkgs.openssh pkgs.vim ];
+  home.packages = [
+    pkgs.coreutils
+    pkgs.nix-prefetch-git
+    pkgs.openssh
+    pkgs.vim
+  ];
   home.sessionVariables = {
     TF_PLUGIN_CACHE_DIR = "$HOME/.terraform.d/plugin-cache";
   };
   programs.atuin = {
     enable = true;
-    settings = { update_check = false; };
+    settings = {
+      update_check = false;
+    };
   };
   programs.bash = {
     enable = true;
     historySize = 0;
     inherit shellAliases;
   };
-  programs.fzf = { enable = true; };
-  programs.starship = { enable = true; };
-  programs.zellij = { enable = true; };
+  programs.fzf = {
+    enable = true;
+  };
+  programs.starship = {
+    enable = true;
+  };
+  programs.zellij = {
+    enable = true;
+  };
   programs.zsh = {
     enable = true;
-    history = { size = 0; };
+    history = {
+      size = 0;
+    };
     autocd = true;
     defaultKeymap = "emacs";
     inherit shellAliases;
@@ -103,16 +118,23 @@ in {
         updateRefs = "true";
       };
     };
-    includes = [{
-      condition = "gitdir:~/GitHub/hiroqn/";
-      contents = {
-        user = {
-          name = "hiroqn";
-          email = "909385+hiroqn@users.noreply.github.com";
+    includes = [
+      {
+        condition = "gitdir:~/GitHub/hiroqn/";
+        contents = {
+          user = {
+            name = "hiroqn";
+            email = "909385+hiroqn@users.noreply.github.com";
+          };
         };
-      };
-    }];
-    ignores = [ ".idea" ".DS_Store" "*.iml" ".direnv" ];
+      }
+    ];
+    ignores = [
+      ".idea"
+      ".DS_Store"
+      "*.iml"
+      ".direnv"
+    ];
   };
   programs.alacritty = {
     enable = true;
