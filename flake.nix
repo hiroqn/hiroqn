@@ -106,23 +106,28 @@
         packages.aarch64-linux.colima-image = colima-aarch64.config.system.build.images.qemu-efi;
       };
 
-      perSystem = { pkgs, ... }: {
-        packages.lore = pkgs.callPackage ./packages/lore { };
+      perSystem = { pkgs, ... }:
+        let
+          lore = pkgs.callPackage ./packages/lore { };
+        in
+        {
+          packages.lore = lore;
 
-        devShells.default = pkgs.mkShell {
-          buildInputs = [
-            pkgs.callPackage ./packages/lore { }
-          ];
-          shellHook = ''
-            # ...
-          '';
-        };
-        treefmt = {
-          programs = {
-            nixfmt.enable = true;
+          devShells.default = pkgs.mkShell {
+            buildInputs = [
+              pkgs.otel-cli
+              lore
+            ];
+            shellHook = ''
+              # ...
+            '';
+          };
+          treefmt = {
+            programs = {
+              nixfmt.enable = true;
+            };
           };
         };
-      };
 
     };
 }
