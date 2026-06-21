@@ -4,7 +4,8 @@ let
     pbcopy = "xclip -selection clipboard";
     pbpaste = "xclip -selection clipboard -o";
   };
-in {
+in
+{
   programs.zsh = { inherit shellAliases; };
   home.stateVersion = "24.05";
 }

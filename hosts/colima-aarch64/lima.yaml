@@ -1,0 +1,25 @@
+# Lima template for the custom NixOS image (Colima とは別インスタンス).
+# LIMA_HOME を Colima と分けたい場合: export LIMA_HOME=~/.config/lima
+#
+#   limactl start nixos --yes ~/GitHub/hiroqn/hiroqn/hosts/colima-aarch64/lima.yaml
+#   limactl shell nixos -- nerdctl run --rm hello-world
+#   limactl stop nixos
+arch: aarch64
+images:
+  - location: "~/.local/share/colima/nixos.qcow2"
+    arch: aarch64
+vmType: vz
+mountType: virtiofs
+cpus: 4
+memory: 8GiB
+disk: 20GiB
+mounts:
+  - location: "~/GitHub"
+    writable: true
+portForwards:
+  - guestSocket: /var/run/containerd/containerd.sock
+    hostSocket: "{{.Dir}}/sock/containerd.sock"
+  - guestSocket: /var/run/buildkit/buildkitd.sock
+    hostSocket: "{{.Dir}}/sock/buildkitd.sock"
+ssh:
+  loadDotSSHPubKeys: false

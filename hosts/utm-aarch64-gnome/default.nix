@@ -9,7 +9,9 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
-  home-manager = { users.hiroqn.imports = [ ./home.nix ]; };
+  home-manager = {
+    users.hiroqn.imports = [ ./home.nix ];
+  };
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -89,8 +91,14 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "hiroqn";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ xclip firefox ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    packages = with pkgs; [
+      xclip
+      firefox
+    ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH6la8XK3DUE9kGtj8LqEEkTtLvAlgXVv/z9BPkj85U4 hiroqn"
     ];
@@ -98,11 +106,10 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs;
-    [
-      #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-      #  wget
-    ];
+  environment.systemPackages = with pkgs; [
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -123,7 +130,10 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   nix.package = pkgs.nixVersions.nix_2_24;
-  nix.settings.trusted-users = [ "root" "hiroqn" ];
+  nix.settings.trusted-users = [
+    "root"
+    "hiroqn"
+  ];
   nix.settings.max-jobs = "auto";
   nix.settings.cores = 0;
   # This value determines the NixOS release from which the default
