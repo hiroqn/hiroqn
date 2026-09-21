@@ -1,4 +1,5 @@
 { config, pkgs, ... }: {
+  services.lore-server.enable = true;
   programs.zsh.dirHashes = {
     gh = "$HOME/GitHub";
   };

@@ -1,6 +1,8 @@
 { pkgs, config, ... }: {
   users.users.hiroqn.name = "hiroqn";
   users.users.hiroqn.home = "/Users/hiroqn";
+  users.users.hiroqn-private.name = "hiroqn-private";
+  users.users.hiroqn-private.home = "/Users/hiroqn-private";
 
   environment.shells = [
     pkgs.zsh
@@ -12,7 +14,10 @@
 
   home-manager = {
     users.hiroqn.imports = [ ./home.nix ];
+    users.hiroqn-private.imports = [ ./home.nix ];
   };
+
+  nix.settings.trusted-users = [ "hiroqn-private" ];
 
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;

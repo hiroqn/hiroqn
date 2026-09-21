@@ -25,6 +25,18 @@
       url = "github:obra/superpowers/v5.1.0";
       flake = false;
     };
+    mizchi-skills = {
+      url = "github:mizchi/skills";
+      flake = false;
+    };
+    k16shikano-japanese-tech-writing = {
+      url = "git+https://gist.github.com/fd287c3133457c4fd8f5601d34aa817d.git";
+      flake = false;
+    };
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
   };
 
   outputs =
@@ -75,15 +87,20 @@
                   anthropic-skills
                   agent-toolkit-for-aws
                   superpowers
+                  mizchi-skills
+                  k16shikano-japanese-tech-writing
+                  mattpocock-skills
                   ;
                 hiroqn = inputs.self;
               };
             };
-            users.hiroqn.imports = [
+            sharedModules = [
               inputs.agent-skills.homeManagerModules.default
               ./modules/home-manager/default.nix
               ./modules/home-manager/agent-skills.nix
+              ./modules/home-manager/lore-server.nix
             ];
+            users.hiroqn = { };
           };
           nix.settings.trusted-users = [ "hiroqn" ];
         };
@@ -110,9 +127,11 @@
         { pkgs, ... }:
         let
           lore = pkgs.callPackage ./packages/lore { };
+          epea-co2 = pkgs.callPackage ./packages/epea-co2 { };
         in
         {
           packages.lore = lore;
+          packages.epea-co2 = epea-co2;
 
           devShells.default = pkgs.mkShell {
             buildInputs = [
