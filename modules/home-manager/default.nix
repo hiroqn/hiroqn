@@ -1,4 +1,8 @@
-{ config, pkgs, ... }:
+{
+  pkgs,
+  inputs,
+  ...
+}:
 let
   shellAliases = {
     ll = "ls -lh";
@@ -9,13 +13,18 @@ in
 {
   xdg = {
     enable = true;
-    configFile."nixpkgs/config.nix".source = ./config.nix;
+    configFile."nixpkgs/config.nix".source = ../../config.nix;
   };
   home.packages = [
+    pkgs.ast-grep
+    pkgs.ripgrep
     pkgs.coreutils
+    pkgs.nil
+    pkgs.nixfmt
     pkgs.nix-prefetch-git
     pkgs.openssh
     pkgs.vim
+    inputs.hiroqn.packages.${pkgs.stdenv.hostPlatform.system}.lore
   ];
   home.sessionVariables = {
     TF_PLUGIN_CACHE_DIR = "$HOME/.terraform.d/plugin-cache";
@@ -78,6 +87,7 @@ in
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+    silent = true;
   };
   programs.delta.enable = true;
   programs.delta.enableGitIntegration = true;
