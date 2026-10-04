@@ -24,7 +24,6 @@ in
     pkgs.nix-prefetch-git
     pkgs.openssh
     pkgs.vim
-    inputs.hiroqn.packages.${pkgs.stdenv.hostPlatform.system}.lore
   ];
   home.sessionVariables = {
     TF_PLUGIN_CACHE_DIR = "$HOME/.terraform.d/plugin-cache";
