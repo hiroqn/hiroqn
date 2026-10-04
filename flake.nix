@@ -35,6 +35,10 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
+    kotek7-dotfiles = {
+      url = "github:kotek-7/dotfiles";
+      flake = false;
+    };
   };
 
   outputs =
@@ -88,6 +92,7 @@
                   mizchi-skills
                   k16shikano-japanese-tech-writing
                   mattpocock-skills
+                  kotek7-dotfiles
                   ;
                 hiroqn = inputs.self;
               };

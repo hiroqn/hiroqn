@@ -29,9 +29,15 @@
       input = "mattpocock-skills";
       subdir = "skills";
     };
+    sources.kotek7-dotfiles = {
+      input = "kotek7-dotfiles";
+      subdir = "dot_agents/skills";
+      idPrefix = "kotek7";
+    };
     skills.enable = [
       # hiroqn
       "update-my-env"
+      "terraform-troubleshooting"
       # mizchi
       "retrospective-codify"
       # anthropic
@@ -56,6 +62,10 @@
     skills.explicit."grilling" = {
       from = "mattpocock-skills";
       path = "productivity/grilling";
+    };
+    skills.explicit."sanitize-artifacts" = {
+      from = "kotek7-dotfiles";
+      path = "sanitize-artifacts";
     };
     targets.agents.enable = true;
   };

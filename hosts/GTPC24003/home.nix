@@ -6,19 +6,11 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks =
-      let
-        opAgentOption = {
-          IdentityAgent = ''"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"'';
-        };
-      in
-      {
-        raspberrypi = {
-          host = "raspberrypi.local";
-          user = "pi";
-          extraOptions = opAgentOption;
-        };
-      };
+    settings.raspberrypi = {
+      header = "Host raspberrypi.local";
+      User = "pi";
+      IdentityAgent = ''"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"'';
+    };
   };
   targets.darwin.defaults = {
     NSGlobalDomain = {
