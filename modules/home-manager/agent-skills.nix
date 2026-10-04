@@ -19,7 +19,7 @@
     };
     sources.mizchi = {
       input = "mizchi-skills";
-      subdir = "meta";
+      subdir = ".";
     };
     sources.k16shikano-japanese-tech-writing = {
       input = "k16shikano-japanese-tech-writing";
@@ -44,7 +44,6 @@
       "brainstorming"
       "systematic-debugging"
       "test-driven-development"
-      "writing-plans"
     ];
     skills.explicit."japanese-tech-writing" = {
       from = "k16shikano-japanese-tech-writing";
