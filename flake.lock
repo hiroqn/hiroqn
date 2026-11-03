@@ -258,6 +258,22 @@
         "type": "github"
       }
     },
+    "openclaw": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791435362,
+        "narHash": "sha256-JBe1617pLa7mChaSw+Div/8RzasaFrUqoS4sagkMWBc=",
+        "owner": "openclaw",
+        "repo": "openclaw",
+        "rev": "a6a353a790eda1d29b87de573233d601a7524a1a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "openclaw",
+        "repo": "openclaw",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agent-skills": "agent-skills",
@@ -271,6 +287,7 @@
         "mizchi-skills": "mizchi-skills",
         "nixos-lima": "nixos-lima",
         "nixpkgs": "nixpkgs_2",
+        "openclaw": "openclaw",
         "superpowers": "superpowers",
         "treefmt-nix": "treefmt-nix"
       }

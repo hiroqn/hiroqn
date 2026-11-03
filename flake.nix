@@ -39,6 +39,10 @@
       url = "github:kotek-7/dotfiles";
       flake = false;
     };
+    openclaw = {
+      url = "github:openclaw/openclaw";
+      flake = false;
+    };
   };
 
   outputs =
@@ -93,6 +97,7 @@
                   k16shikano-japanese-tech-writing
                   mattpocock-skills
                   kotek7-dotfiles
+                  openclaw
                   ;
                 hiroqn = inputs.self;
               };

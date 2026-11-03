@@ -34,10 +34,16 @@
       subdir = "dot_agents/skills";
       idPrefix = "kotek7";
     };
+    sources.openclaw = {
+      input = "openclaw";
+      subdir = ".agents/skills";
+    };
     skills.enable = [
       # hiroqn
       "update-my-env"
       "terraform-troubleshooting"
+      # openclaw
+      "test-audit"
       # mizchi
       "retrospective-codify"
       # anthropic
