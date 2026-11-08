@@ -1,4 +1,8 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  inputs,
+  ...
+}:
 {
   # hiroqn-private 専用。このユーザーの imports からのみ読む。
   home.packages = [
@@ -7,7 +11,9 @@
 
   programs.agent-skills = {
     sources.supermemory = {
-      input = "supermemory-skills";
+      path = pkgs.callPackage ../../packages/supermemory/skills.nix {
+        src = inputs.supermemory-skills;
+      };
       subdir = ".";
     };
     skills.enable = [
