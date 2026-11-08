@@ -5,6 +5,8 @@
 }:
 {
   # hiroqn-private 専用。このユーザーの imports からのみ読む。
+  services.supermemory-server.enable = true;
+
   home.packages = [
     (pkgs.callPackage ../../packages/supermemory { })
   ];
