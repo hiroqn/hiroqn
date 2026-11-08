@@ -19,7 +19,7 @@
     };
     sources.mizchi = {
       input = "mizchi-skills";
-      subdir = "meta";
+      subdir = ".";
     };
     sources.k16shikano-japanese-tech-writing = {
       input = "k16shikano-japanese-tech-writing";
@@ -29,9 +29,21 @@
       input = "mattpocock-skills";
       subdir = "skills";
     };
+    sources.kotek7-dotfiles = {
+      input = "kotek7-dotfiles";
+      subdir = "dot_agents/skills";
+      idPrefix = "kotek7";
+    };
+    sources.openclaw = {
+      input = "openclaw";
+      subdir = ".agents/skills";
+    };
     skills.enable = [
       # hiroqn
       "update-my-env"
+      "terraform-troubleshooting"
+      # openclaw
+      "test-audit"
       # mizchi
       "retrospective-codify"
       # anthropic
@@ -44,7 +56,6 @@
       "brainstorming"
       "systematic-debugging"
       "test-driven-development"
-      "writing-plans"
     ];
     skills.explicit."japanese-tech-writing" = {
       from = "k16shikano-japanese-tech-writing";
@@ -57,6 +68,10 @@
     skills.explicit."grilling" = {
       from = "mattpocock-skills";
       path = "productivity/grilling";
+    };
+    skills.explicit."sanitize-artifacts" = {
+      from = "kotek7-dotfiles";
+      path = "sanitize-artifacts";
     };
     targets.agents.enable = true;
   };

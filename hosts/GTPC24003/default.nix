@@ -14,7 +14,10 @@
 
   home-manager = {
     users.hiroqn.imports = [ ./home.nix ];
-    users.hiroqn-private.imports = [ ./home.nix ];
+    users.hiroqn-private.imports = [
+      ./home.nix
+      ./home-private.nix
+    ];
   };
 
   nix.settings.trusted-users = [ "hiroqn-private" ];

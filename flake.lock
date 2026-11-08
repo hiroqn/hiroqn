@@ -1,25 +1,5 @@
 {
   "nodes": {
-    "BlackHole": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1663525205,
-        "narHash": "sha256-WpD0emnsWxdxioZnQEEjQKsG97YaoT4LOYEtIob+WV4=",
-        "owner": "hiroqn",
-        "repo": "nix-BlackHole",
-        "rev": "7f4f7a4252ceca644c0bcdfac990fc6de16f68c9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hiroqn",
-        "repo": "nix-BlackHole",
-        "type": "github"
-      }
-    },
     "agent-skills": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -95,16 +75,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1779506708,
-        "narHash": "sha256-QOD/CNm196nCJRheux/URi4/HE66fthdOMqCJoPP1Y0=",
+        "lastModified": 1790742243,
+        "narHash": "sha256-kaNo6xHiL31AbNNEreG0OTKf4j6Cxlo5bPawjX7lnbQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "3ee51fbdac8c8bdfe1e7e1fcaba6520a563f394f",
+        "rev": "e5fcd298a00f08b6e8390baf04aa8edb62203070",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "release-25.11",
+        "ref": "release-26.05",
         "repo": "home-manager",
         "type": "github"
       }
@@ -123,6 +103,22 @@
       "original": {
         "type": "git",
         "url": "https://gist.github.com/fd287c3133457c4fd8f5601d34aa817d.git"
+      }
+    },
+    "kotek7-dotfiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790866400,
+        "narHash": "sha256-WbuHqjWcnhUrRITqAMq4nJuy9a5tw0nMjClkaqcozxc=",
+        "owner": "kotek-7",
+        "repo": "dotfiles",
+        "rev": "d62941a0fd2ee091d04b13a2b479312feeb29fdc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kotek-7",
+        "repo": "dotfiles",
+        "type": "github"
       }
     },
     "mattpocock-skills": {
@@ -248,35 +244,69 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1782847189,
-        "narHash": "sha256-twXPFqFsrrY5r28Zh7Homgcp2gUMBgQ6WDS98Q/3xFI=",
+        "lastModified": 1790635395,
+        "narHash": "sha256-bNyvoIyOCu7lzoCpWKWGIsHpTtERUWzqYWFPlN++WTw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b6018f87da91d19d0ab4cf979885689b469cdd41",
+        "rev": "7fc6f2c20af09cdcaf48b92ec3121860139ec668",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-25.11",
+        "ref": "nixos-26.05",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "openclaw": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791435362,
+        "narHash": "sha256-JBe1617pLa7mChaSw+Div/8RzasaFrUqoS4sagkMWBc=",
+        "owner": "openclaw",
+        "repo": "openclaw",
+        "rev": "a6a353a790eda1d29b87de573233d601a7524a1a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "openclaw",
+        "repo": "openclaw",
         "type": "github"
       }
     },
     "root": {
       "inputs": {
-        "BlackHole": "BlackHole",
         "agent-skills": "agent-skills",
         "agent-toolkit-for-aws": "agent-toolkit-for-aws",
         "anthropic-skills": "anthropic-skills",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "k16shikano-japanese-tech-writing": "k16shikano-japanese-tech-writing",
+        "kotek7-dotfiles": "kotek7-dotfiles",
         "mattpocock-skills": "mattpocock-skills",
         "mizchi-skills": "mizchi-skills",
         "nixos-lima": "nixos-lima",
         "nixpkgs": "nixpkgs_2",
+        "openclaw": "openclaw",
+        "supermemory-skills": "supermemory-skills",
         "superpowers": "superpowers",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "supermemory-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792015327,
+        "narHash": "sha256-qQ4Hlv1qxA7qg79xjnvrhakfQsscMst+UiHSZFKx/B0=",
+        "owner": "supermemoryai",
+        "repo": "skills",
+        "rev": "64e285d5a4a56c773e86c088af54524328b71c42",
+        "type": "github"
+      },
+      "original": {
+        "owner": "supermemoryai",
+        "repo": "skills",
+        "type": "github"
       }
     },
     "superpowers": {

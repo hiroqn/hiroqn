@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   inputs,
   ...
@@ -24,7 +25,6 @@ in
     pkgs.nix-prefetch-git
     pkgs.openssh
     pkgs.vim
-    inputs.hiroqn.packages.${pkgs.stdenv.hostPlatform.system}.lore
   ];
   home.sessionVariables = {
     TF_PLUGIN_CACHE_DIR = "$HOME/.terraform.d/plugin-cache";
@@ -51,6 +51,7 @@ in
   };
   programs.zsh = {
     enable = true;
+    dotDir = config.home.homeDirectory;
     history = {
       size = 0;
     };
@@ -106,7 +107,12 @@ in
         refname = "true";
       };
 
-      credential.helper = "${pkgs.gh}/bin/gh auth git-credential";
+      # 空文字で、Nix の git が system config に入れる osxkeychain を捨てる。
+      # helper の実体は store パスなので、許可しても git を更新するたびに聞き直す。
+      credential.helper = [
+        ""
+        "${pkgs.gh}/bin/gh auth git-credential"
+      ];
       merge.conflictstyle = "zdiff3";
       push = {
         default = "simple";

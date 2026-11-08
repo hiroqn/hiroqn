@@ -2,12 +2,10 @@
   description = "hiroqn env";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    BlackHole.url = "github:hiroqn/nix-BlackHole";
-    BlackHole.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     nixos-lima.url = "github:nixos-lima/nixos-lima";
@@ -35,6 +33,18 @@
     };
     mattpocock-skills = {
       url = "github:mattpocock/skills";
+      flake = false;
+    };
+    kotek7-dotfiles = {
+      url = "github:kotek-7/dotfiles";
+      flake = false;
+    };
+    openclaw = {
+      url = "github:openclaw/openclaw";
+      flake = false;
+    };
+    supermemory-skills = {
+      url = "github:supermemoryai/skills";
       flake = false;
     };
   };
@@ -90,6 +100,9 @@
                   mizchi-skills
                   k16shikano-japanese-tech-writing
                   mattpocock-skills
+                  kotek7-dotfiles
+                  openclaw
+                  supermemory-skills
                   ;
                 hiroqn = inputs.self;
               };
@@ -128,10 +141,12 @@
         let
           lore = pkgs.callPackage ./packages/lore { };
           epea-co2 = pkgs.callPackage ./packages/epea-co2 { };
+          supermemory = pkgs.callPackage ./packages/supermemory { };
         in
         {
           packages.lore = lore;
           packages.epea-co2 = epea-co2;
+          packages.supermemory = supermemory;
 
           devShells.default = pkgs.mkShell {
             buildInputs = [
@@ -148,6 +163,5 @@
             };
           };
         };
-
     };
 }
