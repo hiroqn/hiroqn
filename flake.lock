@@ -288,8 +288,25 @@
         "nixos-lima": "nixos-lima",
         "nixpkgs": "nixpkgs_2",
         "openclaw": "openclaw",
+        "supermemory-skills": "supermemory-skills",
         "superpowers": "superpowers",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "supermemory-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792015327,
+        "narHash": "sha256-qQ4Hlv1qxA7qg79xjnvrhakfQsscMst+UiHSZFKx/B0=",
+        "owner": "supermemoryai",
+        "repo": "skills",
+        "rev": "64e285d5a4a56c773e86c088af54524328b71c42",
+        "type": "github"
+      },
+      "original": {
+        "owner": "supermemoryai",
+        "repo": "skills",
+        "type": "github"
       }
     },
     "superpowers": {

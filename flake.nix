@@ -43,6 +43,10 @@
       url = "github:openclaw/openclaw";
       flake = false;
     };
+    supermemory-skills = {
+      url = "github:supermemoryai/skills";
+      flake = false;
+    };
   };
 
   outputs =
@@ -98,6 +102,7 @@
                   mattpocock-skills
                   kotek7-dotfiles
                   openclaw
+                  supermemory-skills
                   ;
                 hiroqn = inputs.self;
               };
@@ -136,10 +141,12 @@
         let
           lore = pkgs.callPackage ./packages/lore { };
           epea-co2 = pkgs.callPackage ./packages/epea-co2 { };
+          supermemory = pkgs.callPackage ./packages/supermemory { };
         in
         {
           packages.lore = lore;
           packages.epea-co2 = epea-co2;
+          packages.supermemory = supermemory;
 
           devShells.default = pkgs.mkShell {
             buildInputs = [
