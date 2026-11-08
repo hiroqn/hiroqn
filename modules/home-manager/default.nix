@@ -107,7 +107,12 @@ in
         refname = "true";
       };
 
-      credential.helper = "${pkgs.gh}/bin/gh auth git-credential";
+      # 空文字で、Nix の git が system config に入れる osxkeychain を捨てる。
+      # helper の実体は store パスなので、許可しても git を更新するたびに聞き直す。
+      credential.helper = [
+        ""
+        "${pkgs.gh}/bin/gh auth git-credential"
+      ];
       merge.conflictstyle = "zdiff3";
       push = {
         default = "simple";
