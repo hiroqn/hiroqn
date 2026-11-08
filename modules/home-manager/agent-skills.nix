@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   programs.agent-skills = {
     enable = true;
     sources.hiroqn-skills = {
@@ -39,9 +40,7 @@
       subdir = ".agents/skills";
     };
     skills.enable = [
-      # hiroqn
-      "update-my-env"
-      "terraform-troubleshooting"
+      "about-env"
       # openclaw
       "test-audit"
       # mizchi

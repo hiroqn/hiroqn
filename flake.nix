@@ -112,6 +112,7 @@
               ./modules/home-manager/default.nix
               ./modules/home-manager/agent-skills.nix
               ./modules/home-manager/lore-server.nix
+              ./modules/home-manager/supermemory-server.nix
             ];
             users.hiroqn = { };
           };
@@ -142,11 +143,13 @@
           lore = pkgs.callPackage ./packages/lore { };
           epea-co2 = pkgs.callPackage ./packages/epea-co2 { };
           supermemory = pkgs.callPackage ./packages/supermemory { };
+          supermemory-server = pkgs.callPackage ./packages/supermemory-server { };
         in
         {
           packages.lore = lore;
           packages.epea-co2 = epea-co2;
           packages.supermemory = supermemory;
+          packages.supermemory-server = supermemory-server;
 
           devShells.default = pkgs.mkShell {
             buildInputs = [
