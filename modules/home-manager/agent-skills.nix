@@ -1,8 +1,4 @@
-{
-  darwinInputs ? null,
-  lib,
-  ...
-}:
+{ ... }:
 {
   programs.agent-skills = {
     enable = true;
@@ -44,8 +40,7 @@
       subdir = ".agents/skills";
     };
     skills.enable = [
-      # hiroqn。about-env は explicit で、darwin-rebuild の rev を SKILL.md に埋める
-      "terraform-troubleshooting"
+      "about-env"
       # openclaw
       "test-audit"
       # mizchi
@@ -61,19 +56,6 @@
       "systematic-debugging"
       "test-driven-development"
     ];
-    # skills.explicit.about-env = {
-    #   from = "hiroqn-skills";
-    #   transform =
-    #     { original, ... }:
-    #     if darwinInputs == null then
-    #       throw "about-env: darwinInputs が無い。/etc/nix-darwin の extraSpecialArgs.darwinInputs を渡す"
-    #     else
-    #       (import ./about-env-skill.nix { inherit lib; }) {
-    #         nixDarwinRev = darwinInputs.nix-darwin.rev or null;
-    #         homeManagerRev = darwinInputs.home-manager.rev or null;
-    #         nixpkgsRev = darwinInputs.nixpkgs.rev or null;
-    #       } original;
-    # };
     skills.explicit."japanese-tech-writing" = {
       from = "k16shikano-japanese-tech-writing";
       path = ".";

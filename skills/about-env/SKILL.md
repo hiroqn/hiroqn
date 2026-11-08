@@ -82,7 +82,7 @@ flowchart TD
 判断がつかないときは、ユーザーに確認する。
 
 ```bash
-nix shell "github:NixOS/nixpkgs/@nixpkgsRev@#<tool>"
+nix shell nixpkgs#<tool>
 ```
 
 ### 設定をどの属性で書くか
@@ -201,19 +201,11 @@ nix eval --json /etc/nix-darwin#darwinConfigurations.$(hostname).config.home-man
 
 ## オプションの型
 
-オプションの名前、型、デフォルトを調べる。今使っている revision は次のとおり。
-
-| input | rev |
-|-------|-----|
-| `nix-darwin` | `@nixDarwinRev@` |
-| `home-manager` | `@homeManagerRev@` |
-| `nixpkgs` | `@nixpkgsRev@` |
+オプションの名前、型、デフォルトを調べる。
 
 ```bash
-HM=$(nix build --no-link --print-out-paths \
-  "github:nix-community/home-manager/@homeManagerRev@#docs-json")/share/doc/home-manager/options.json
-ND=$(nix build --no-link --print-out-paths \
-  "github:nix-darwin/nix-darwin/@nixDarwinRev@#optionsJSON")/share/doc/darwin/options.json
+HM=$(nix build --no-link --print-out-paths home-manager#docs-json)/share/doc/home-manager/options.json
+ND=$(nix build --no-link --print-out-paths nix-darwin#optionsJSON)/share/doc/darwin/options.json
 
 jq '."programs.git.enable" | {type, default, description}' "$HM"
 ```
@@ -221,7 +213,7 @@ jq '."programs.git.enable" | {type, default, description}' "$HM"
 パッケージの属性名は、次で調べる。
 
 ```bash
-nix eval "github:NixOS/nixpkgs/@nixpkgsRev@#<attr>.meta.description"
+nix eval nixpkgs#<attr>.meta.description
 ```
 
 ## ビルドと適用
@@ -280,21 +272,6 @@ git config --show-origin --get <key>
 - **既存**: 未管理 / すでにその属性で管理している
 - **次の操作**: 編集 → `darwin-rebuild build` → 確認してから `sudo darwin-rebuild switch`
 ```
-
-## Colima 用の NixOS イメージ
-
-今この Mac で Colima が使えるかは `command -v colima` で見る。repo に定義が残っていても、`/etc/nix-darwin/flake.nix` がサービスを起動しているとは限らない。
-
-| 知りたいこと | 場所 |
-|--------------|------|
-| イメージのパッケージ | `flake.nix` の `packages.aarch64-linux.colima-image`。この repo で `nix build .#packages.aarch64-linux.colima-image` |
-| 成果物のファイル名 | `nix eval --raw .#packages.aarch64-linux.colima-image.passthru.filePath` |
-| NixOS 側の定義 | `hosts/colima-aarch64/default.nix` |
-| Lima で起動するコマンドと VM の種類 | `hosts/colima-aarch64/lima.yaml` の先頭 |
-
-成果物は QEMU 用の qcow2（`system.build.images.qemu-efi`）である。Lima で動かす VM は `lima.yaml` の `vmType: vz` である。macOS 上でこの `aarch64-linux` パッケージをビルドするには Linux のビルダーが要る。有効かは `/etc/nix-darwin/flake.nix` の `nix.linux-builder` を見る。
-
-`diskImage` は VM を作ったあとでは差し替えられない。イメージを更新したら、VM を削除してから作り直す。この NixOS イメージに、Colima の apt ベースの provision は使わない。カスタム qcow2 を Colima で使うときは `forceDiskImage: true` が要る。Colima 0.10.1 の `--force-disk-image` は未対応のことがある。
 
 ## 注意
 
